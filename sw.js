@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-//  MUFASA STRENGTH — Service Worker v2
+//  MUFASA STRENGTH — Service Worker v3
 // ══════════════════════════════════════════
 
 const CACHE_NAME = 'mufasa-v3';
