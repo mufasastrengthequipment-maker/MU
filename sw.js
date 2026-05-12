@@ -3,6 +3,7 @@
 // ══════════════════════════════════════════
 
 const CACHE_NAME = 'mufasa-v3';
+const CACHE_VERSION = 3;
 
 // Core files to cache on install (app shell)
 const PRECACHE = [
@@ -11,7 +12,9 @@ const PRECACHE = [
   '/manifest.json',
   '/mufasa-header-logo.png',
   '/hero-bg.png',
-  // Google Fonts — cached at runtime on first load
+  '/343490bc1f30e07fafa24787db7cc40e.jpg',
+  '/b580ce7684acdf3f50585a63262be7b6.jpg',
+  '/FB_IMG_17764489238779449.jpg',
 ];
 
 // ── Install: pre-cache the app shell ──────
@@ -33,7 +36,7 @@ self.addEventListener('activate', event => {
     caches.keys().then(keys =>
       Promise.all(
         keys
-          .filter(key => key !== CACHE_NAME)
+          .filter(key => key !== CACHE_NAME && key.startsWith('mufasa-'))
           .map(key => {
             console.log('[SW] Deleting old cache:', key);
             return caches.delete(key);
@@ -56,19 +59,24 @@ self.addEventListener('fetch', event => {
   const networkFirst = [
     'firebaseio.com',
     'firebaseapp.com',
+    'firebase.google.com',
     'googleapis.com',
     'gstatic.com',
     'wa.me',
     'youtube.com',
     'soundcloud.com',
     'spotify.com',
+    'facebook.com',
   ];
 
   if (networkFirst.some(domain => url.hostname.includes(domain))) {
     event.respondWith(
       fetch(request).catch(() => {
-        // If network fails for Firebase etc., just fail silently
-        return new Response('', { status: 503 });
+        // If network fails for Firebase etc., fail gracefully
+        return new Response(
+          JSON.stringify({ error: 'Service unavailable' }),
+          { status: 503, headers: { 'Content-Type': 'application/json' } }
+        );
       })
     );
     return;
@@ -79,14 +87,17 @@ self.addEventListener('fetch', event => {
     event.respondWith(
       fetch(request)
         .then(response => {
-          // Cache the fresh HTML
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(request, clone));
+          // Only cache successful responses
+          if (response.status === 200) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put(request, clone));
+          }
           return response;
         })
         .catch(() => {
           // Offline fallback — serve cached index.html
-          return caches.match('/index.html');
+          return caches.match('/index.html') || 
+            new Response('Offline — please check your connection', { status: 503 });
         })
     );
     return;
@@ -109,21 +120,49 @@ self.addEventListener('fetch', event => {
         }
         return response;
       }).catch(() => {
-        // For images, return a transparent 1px placeholder
+        // For images, return a transparent 1px SVG placeholder
         if (request.destination === 'image') {
           return new Response(
-            '<svg xmlns="http://www.w3.org/2000/svg" width="1" height="1"/>',
-            { headers: { 'Content-Type': 'image/svg+xml' } }
+            '<svg xmlns="http://www.w3.org/2000/svg" width="1" height="1"><rect fill="%23222" width="1" height="1"/></svg>',
+            { 
+              status: 200,
+              headers: { 'Content-Type': 'image/svg+xml' } 
+            }
           );
         }
+        
+        // For other requests, return an offline response
+        return new Response('Resource unavailable offline', { status: 503 });
       });
     })
   );
 });
 
-// ── Background sync: notify clients of updates ──
+// ── Message handler: client-to-service-worker communication ──
 self.addEventListener('message', event => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
+  
+  if (event.data && event.data.type === 'CLEAR_CACHE') {
+    caches.delete(CACHE_NAME).then(() => {
+      event.ports[0].postMessage({ cleared: true });
+    });
+  }
 });
+
+// ── Background sync: future feature for offline queueing ──
+self.addEventListener('sync', event => {
+  if (event.tag === 'sync-data') {
+    event.waitUntil(syncData());
+  }
+});
+
+async function syncData() {
+  try {
+    console.log('[SW] Background sync triggered');
+    // Future: implement data sync when connection restored
+  } catch (err) {
+    console.error('[SW] Sync failed:', err);
+  }
+}
