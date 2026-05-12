@@ -2,7 +2,7 @@
 //  MUFASA STRENGTH — Service Worker v2
 // ══════════════════════════════════════════
 
-const CACHE_NAME = 'mufasa-v2';
+const CACHE_NAME = 'mufasa-v3';
 
 // Core files to cache on install (app shell)
 const PRECACHE = [
