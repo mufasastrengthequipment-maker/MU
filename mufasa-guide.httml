@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MUFASA — Guide Center</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Barlow:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --g:#D4942A;--gl:#F0B84A;--gd:#A8741F;
+  --gdim:rgba(212,148,42,.18);--gfaint:rgba(212,148,42,.07);
+  --bg:#050403;--s1:#0C0A08;--s2:#121008;
+  --card:#18150F;--card2:#1F1B12;
+  --b1:rgba(212,148,42,.13);--b2:rgba(212,148,42,.32);
+  --w:#F4EFE4;--grey:#A09890;--dim:#7A7570;
+  --green:#22a050;--red:#e05252;--blue:#4A90D9;
+  --r:6px;--r2:12px;--r3:20px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--w);overflow-x:hidden;line-height:1.6;}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--s1);}
+::-webkit-scrollbar-thumb{background:var(--gd);border-radius:3px;}
+
+/* ── TOP HEADER ── */
+.top-header{
+  position:sticky;top:0;z-index:200;
+  background:rgba(5,4,3,.96);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--b1);
+  padding:0 5vw;height:60px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+.logo-wrap{display:flex;align-items:center;gap:12px;flex-shrink:0;}
+.logo-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--gd),var(--gl));border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:1rem;color:var(--bg);}
+.logo-text{font-family:'Anton',sans-serif;font-size:1rem;letter-spacing:.1em;color:var(--gl);}
+.logo-sub{font-family:'Barlow Condensed',sans-serif;font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--dim);}
+
+/* ── TAB SWITCHER ── */
+.tab-bar{display:flex;align-items:center;gap:4px;background:var(--s1);border:1px solid var(--b1);border-radius:var(--r2);padding:4px;}
+.tab-btn{
+  display:flex;align-items:center;gap:7px;
+  padding:7px 16px;border-radius:var(--r);
+  font-family:'Barlow Condensed',sans-serif;font-size:.82rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;
+  border:none;background:none;color:var(--grey);cursor:pointer;
+  transition:all .22s;white-space:nowrap;
+}
+.tab-btn.active{background:linear-gradient(135deg,var(--gd),var(--gl));color:var(--bg);}
+.tab-btn:not(.active):hover{color:var(--gl);background:var(--gfaint);}
+.tab-ico{font-size:.9rem;}
+.lock-ico{font-size:.75rem;opacity:.7;}
+
+/* ── LAYOUT ── */
+.guide-shell{display:none;}
+.guide-shell.active{display:flex;min-height:calc(100vh - 60px);}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  width:236px;flex-shrink:0;
+  background:var(--s1);border-right:1px solid var(--b1);
+  padding:20px 0;position:sticky;top:60px;height:calc(100vh - 60px);
+  overflow-y:auto;
+}
+.sb-label{font-family:'Barlow Condensed',sans-serif;font-size:.63rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--dim);padding:12px 20px 5px;}
+.sb-item{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 20px;
+  font-family:'Barlow Condensed',sans-serif;font-size:.84rem;font-weight:600;
+  letter-spacing:.05em;color:var(--grey);cursor:pointer;
+  transition:all .2s;text-decoration:none;border-left:2px solid transparent;
+}
+.sb-item:hover,.sb-item.act{color:var(--gl);background:var(--gfaint);border-left-color:var(--g);}
+.sb-ico{width:20px;text-align:center;font-size:.88rem;flex-shrink:0;}
+.sb-divider{height:1px;background:var(--b1);margin:10px 16px;}
+
+/* ── MAIN ── */
+.main{flex:1;padding:40px 5vw;max-width:880px;}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(135deg,var(--card),var(--card2));
+  border:1px solid var(--b2);border-radius:var(--r3);
+  padding:40px 44px;margin-bottom:40px;position:relative;overflow:hidden;
+}
+.hero::after{content:'🦁';position:absolute;right:28px;bottom:-12px;font-size:8rem;opacity:.06;pointer-events:none;}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--gdim);border:1px solid var(--b2);border-radius:20px;
+  padding:5px 14px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;
+  font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--g);margin-bottom:16px;
+}
+.hero-badge::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%;animation:blink 2s ease infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.hero h1{font-family:'Anton',sans-serif;font-size:2.4rem;line-height:.93;color:var(--w);margin-bottom:10px;}
+.hero h1 span{color:var(--g);}
+.hero p{color:var(--grey);font-size:.93rem;max-width:480px;line-height:1.65;}
+.hero-chips{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px;}
+.chip{display:inline-flex;align-items:center;gap:7px;background:var(--s1);border:1px solid var(--b1);border-radius:20px;padding:6px 13px;font-family:'Barlow Condensed',sans-serif;font-size:.76rem;font-weight:600;letter-spacing:.07em;color:var(--grey);}
+.chip .dot{width:5px;height:5px;background:var(--g);border-radius:50%;flex-shrink:0;}
+.hero-stats{display:flex;gap:24px;margin-top:22px;flex-wrap:wrap;}
+.hstat{text-align:center;}
+.hstat-n{font-family:'Anton',sans-serif;font-size:1.5rem;color:var(--g);}
+.hstat-l{font-family:'Barlow Condensed',sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);}
+
+/* ── SECTION ── */
+.section{margin-bottom:48px;scroll-margin-top:82px;}
+.section-header{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--b1);}
+.section-num{width:36px;height:36px;background:linear-gradient(135deg,var(--gd),var(--gl));border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:.95rem;color:var(--bg);flex-shrink:0;}
+.section-title{font-family:'Anton',sans-serif;font-size:1.32rem;letter-spacing:.04em;color:var(--w);}
+.section-sub{font-family:'Barlow Condensed',sans-serif;font-size:.75rem;letter-spacing:.22em;text-transform:uppercase;color:var(--g);margin-top:2px;}
+
+/* ── CARDS ── */
+.card{background:var(--card);border:1px solid var(--b1);border-radius:var(--r2);padding:22px 24px;margin-bottom:14px;transition:border-color .2s;}
+.card:hover{border-color:var(--b2);}
+.card-title{font-family:'Barlow Condensed',sans-serif;font-size:.93rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gl);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.card p{color:var(--grey);font-size:.87rem;line-height:1.65;}
+.card p+p{margin-top:8px;}
+
+/* ── STEPS ── */
+.steps{counter-reset:step;display:flex;flex-direction:column;gap:10px;}
+.step{display:flex;gap:14px;align-items:flex-start;background:var(--s1);border:1px solid var(--b1);border-radius:var(--r2);padding:16px 18px;counter-increment:step;}
+.step::before{content:counter(step);width:26px;height:26px;flex-shrink:0;background:var(--gdim);border:1px solid var(--b2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:.8rem;color:var(--g);}
+.step-body{flex:1;}
+.step-body strong{font-family:'Barlow Condensed',sans-serif;font-size:.9rem;font-weight:700;color:var(--w);letter-spacing:.05em;display:block;margin-bottom:4px;}
+.step-body p{color:var(--grey);font-size:.84rem;line-height:1.55;}
+
+/* ── GRIDS ── */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+
+/* ── ALERTS ── */
+.alert{display:flex;gap:12px;align-items:flex-start;padding:14px 18px;border-radius:var(--r2);margin:14px 0;font-size:.85rem;line-height:1.55;}
+.alert-tip{background:rgba(212,148,42,.08);border:1px solid rgba(212,148,42,.3);color:var(--w);}
+.alert-info{background:rgba(74,144,217,.08);border:1px solid rgba(74,144,217,.28);color:var(--w);}
+.alert-success{background:rgba(34,160,80,.08);border:1px solid rgba(34,160,80,.28);color:var(--w);}
+.alert-warn{background:rgba(212,148,42,.08);border:1px solid rgba(212,148,42,.3);color:var(--w);}
+.alert-ico{font-size:1rem;flex-shrink:0;margin-top:1px;}
+
+/* ── TAGS ── */
+.tag{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-family:'Barlow Condensed',sans-serif;font-size:.71rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;}
+.tag-green{background:rgba(34,160,80,.15);border:1px solid rgba(34,160,80,.4);color:var(--green);}
+.tag-gold{background:var(--gdim);border:1px solid var(--b2);color:var(--g);}
+.tag-red{background:rgba(224,82,82,.12);border:1px solid rgba(224,82,82,.35);color:var(--red);}
+.tag-blue{background:rgba(74,144,217,.12);border:1px solid rgba(74,144,217,.35);color:var(--blue);}
+
+/* ── FEATURE BOX ── */
+.feat{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r2);padding:18px;text-align:center;transition:border-color .2s;}
+.feat:hover{border-color:var(--b2);}
+.feat-ico{font-size:1.9rem;margin-bottom:9px;}
+.feat-title{font-family:'Barlow Condensed',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gl);margin-bottom:6px;}
+.feat p{font-size:.81rem;color:var(--grey);line-height:1.5;}
+
+/* ── PRODUCT CARD ── */
+.prod-card{background:var(--card);border:1px solid var(--b1);border-radius:var(--r2);padding:20px;transition:border-color .2s;}
+.prod-card:hover{border-color:var(--b2);}
+.prod-range{font-family:'Barlow Condensed',sans-serif;font-size:.73rem;letter-spacing:.2em;text-transform:uppercase;color:var(--g);margin-bottom:5px;}
+.prod-name{font-family:'Anton',sans-serif;font-size:1rem;color:var(--w);margin-bottom:6px;}
+.prod-desc{font-size:.82rem;color:var(--grey);line-height:1.5;margin-bottom:9px;}
+.prod-price{font-family:'Barlow Condensed',sans-serif;font-size:.84rem;font-weight:700;color:var(--gl);}
+
+/* ── CODE ── */
+code,.inline-code{font-family:'JetBrains Mono',monospace;font-size:.8rem;background:rgba(212,148,42,.1);border:1px solid var(--b1);border-radius:4px;padding:2px 6px;color:var(--gl);}
+.code-block{background:var(--s1);border:1px solid var(--b2);border-radius:var(--r2);padding:18px 20px;margin:10px 0;font-family:'JetBrains Mono',monospace;font-size:.79rem;color:var(--gl);line-height:1.75;overflow-x:auto;}
+.code-block .cm{color:var(--dim);}
+.code-block .ck{color:#4A90D9;}
+.code-block .cv{color:var(--green);}
+
+/* ── TABLE ── */
+.tbl-wrap{overflow-x:auto;border-radius:var(--r2);border:1px solid var(--b1);margin-bottom:14px;}
+table{width:100%;border-collapse:collapse;}
+thead{background:var(--s2);}
+th{font-family:'Barlow Condensed',sans-serif;font-size:.74rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--g);padding:12px 16px;text-align:left;border-bottom:1px solid var(--b2);}
+td{padding:11px 16px;font-size:.84rem;color:var(--grey);border-bottom:1px solid var(--b1);vertical-align:top;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--gfaint);color:var(--w);}
+td strong{color:var(--w);font-weight:500;}
+
+/* ── PATH ── */
+.path{display:flex;align-items:center;gap:6px;flex-wrap:wrap;background:var(--s1);border:1px solid var(--b1);border-radius:var(--r);padding:8px 14px;margin:10px 0;font-family:'JetBrains Mono',monospace;font-size:.79rem;color:var(--dim);}
+.path span{color:var(--gl);}
+.path .sep{color:var(--dim);opacity:.5;}
+
+/* ── FIREBASE TREE ── */
+.fb-tree{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r2);padding:18px 20px;font-family:'JetBrains Mono',monospace;font-size:.79rem;line-height:2;}
+.fb-tree .fb-root{color:var(--g);font-weight:600;}
+.fb-tree .fb-col{color:var(--blue);margin-left:16px;}
+.fb-tree .fb-doc{color:var(--gl);margin-left:32px;}
+
+/* ── FAQ ── */
+.faq-item{background:var(--card);border:1px solid var(--b1);border-radius:var(--r2);overflow:hidden;margin-bottom:10px;}
+.faq-q{padding:16px 20px;font-family:'Barlow Condensed',sans-serif;font-size:.94rem;font-weight:700;letter-spacing:.06em;color:var(--w);cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;transition:background .2s;}
+.faq-q:hover{background:var(--gfaint);}
+.faq-q .fq-arr{color:var(--g);font-size:1rem;transition:transform .3s;flex-shrink:0;}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease;}
+.faq-a.open{max-height:300px;padding:0 20px 16px;}
+.faq-a p{font-size:.86rem;color:var(--grey);line-height:1.65;}
+.faq-q.open .fq-arr{transform:rotate(45deg);}
+
+/* ── CHECKLIST ── */
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.checklist li{display:flex;align-items:flex-start;gap:10px;background:var(--s1);border:1px solid var(--b1);border-radius:var(--r);padding:10px 14px;font-size:.85rem;color:var(--grey);}
+.checklist li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;}
+
+/* ── DELIVERY ROW ── */
+.d-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--b1);}
+.d-row:last-child{border-bottom:none;}
+.d-label{font-size:.87rem;color:var(--w);font-weight:500;}
+
+/* ── WA BUTTON ── */
+.btn-wa{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#1a7a3a,#22a050);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:.84rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:11px 22px;border:none;border-radius:var(--r);cursor:pointer;text-decoration:none;}
+.btn-wa:hover{opacity:.85;}
+
+/* ── SCROLL TOP ── */
+#top-btn{position:fixed;bottom:24px;right:24px;width:40px;height:40px;background:linear-gradient(135deg,var(--gd),var(--gl));border:none;border-radius:50%;color:var(--bg);font-size:1rem;cursor:pointer;box-shadow:0 4px 16px rgba(212,148,42,.4);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;z-index:50;}
+#top-btn.show{opacity:1;pointer-events:all;}
+#top-btn:hover{transform:scale(1.1);}
+
+/* ── LOCK SCREEN ── */
+#lock-screen{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(5,4,3,.97);backdrop-filter:blur(16px);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+#lock-screen.show{opacity:1;pointer-events:all;}
+.lock-box{
+  background:var(--card);border:1px solid var(--b2);border-radius:var(--r3);
+  padding:44px 48px;width:min(420px,90vw);text-align:center;
+  animation:lockIn .3s ease;
+}
+@keyframes lockIn{from{transform:scale(.94);opacity:0;}to{transform:scale(1);opacity:1;}}
+.lock-icon{font-size:3rem;margin-bottom:16px;}
+.lock-title{font-family:'Anton',sans-serif;font-size:1.8rem;color:var(--w);margin-bottom:6px;}
+.lock-sub{font-size:.87rem;color:var(--grey);margin-bottom:28px;line-height:1.55;}
+.lock-input{
+  width:100%;background:var(--s1);border:1px solid var(--b1);border-radius:var(--r);
+  color:var(--w);padding:12px 16px;font-family:'Barlow',sans-serif;font-size:1rem;
+  outline:none;transition:border-color .2s;text-align:center;letter-spacing:.15em;
+  margin-bottom:10px;
+}
+.lock-input:focus{border-color:var(--g);}
+.lock-input::placeholder{letter-spacing:.05em;color:var(--dim);}
+.lock-btn{
+  width:100%;padding:13px;background:linear-gradient(135deg,var(--gd),var(--gl));
+  border:none;border-radius:var(--r);color:var(--bg);
+  font-family:'Barlow Condensed',sans-serif;font-size:.9rem;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;cursor:pointer;transition:opacity .2s;margin-bottom:10px;
+}
+.lock-btn:hover{opacity:.85;}
+.lock-err{font-size:.82rem;color:var(--red);min-height:20px;transition:opacity .2s;}
+.lock-cancel{font-family:'Barlow Condensed',sans-serif;font-size:.8rem;color:var(--dim);background:none;border:none;cursor:pointer;margin-top:4px;transition:color .2s;}
+.lock-cancel:hover{color:var(--grey);}
+
+/* ── ADMIN BADGE (in header) ── */
+.admin-badge{display:none;align-items:center;gap:6px;background:rgba(212,148,42,.12);border:1px solid var(--b2);border-radius:20px;padding:4px 12px;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.2em;color:var(--g);}
+.admin-badge.show{display:flex;}
+.admin-badge::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%;animation:blink 2s ease infinite;}
+.logout-btn{background:none;border:1px solid var(--b1);color:var(--dim);padding:5px 12px;border-radius:var(--r);font-family:'Barlow Condensed',sans-serif;font-size:.72rem;cursor:pointer;transition:all .2s;display:none;}
+.logout-btn.show{display:block;}
+.logout-btn:hover{border-color:var(--red);color:var(--red);}
+
+@media(max-width:700px){
+  .sidebar{display:none;}
+  .main{padding:24px 5vw;}
+  .hero{padding:28px 24px;}
+  .hero h1{font-size:1.85rem;}
+  .grid2,.grid3{grid-template-columns:1fr;}
+  .tab-btn span.tab-label{display:none;}
+  .lock-box{padding:32px 24px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ── TOP HEADER ── -->
+<header class="top-header">
+  <div class="logo-wrap">
+    <div class="logo-icon">M</div>
+    <div>
+      <div class="logo-text">MUFASA</div>
+      <div class="logo-sub" id="header-sub">Guide Center</div>
+    </div>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+    <!-- Tab switcher -->
+    <div class="tab-bar">
+      <button class="tab-btn active" id="tab-user" onclick="switchTab('user')">
+        <span class="tab-ico">📖</span><span class="tab-label">User Guide</span>
+      </button>
+      <button class="tab-btn" id="tab-admin" onclick="switchTab('admin')">
+        <span class="tab-ico">⚡</span><span class="tab-label">Admin Guide</span>
+        <span class="lock-ico" id="lock-ico">🔒</span>
+      </button>
+    </div>
+
+    <div class="admin-badge" id="admin-badge">Admin</div>
+    <button class="logout-btn" id="logout-btn" onclick="lockAdmin()">Sign Out</button>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════
+     USER GUIDE
+══════════════════════════════════════ -->
+<div class="guide-shell active" id="shell-user">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sb-user">
+    <div class="sb-label">Start Here</div>
+    <a href="#u-welcome" class="sb-item act" data-guide="user"><span class="sb-ico">🏠</span>Welcome</a>
+    <a href="#u-navigate" class="sb-item" data-guide="user"><span class="sb-ico">🧭</span>Navigating the Site</a>
+    <div class="sb-divider"></div>
+    <div class="sb-label">Shopping</div>
+    <a href="#u-products" class="sb-item" data-guide="user"><span class="sb-ico">🏋️</span>Browsing Products</a>
+    <a href="#u-order" class="sb-item" data-guide="user"><span class="sb-ico">🛒</span>Placing an Order</a>
+    <a href="#u-delivery" class="sb-item" data-guide="user"><span class="sb-ico">🚚</span>Delivery & Payment</a>
+    <div class="sb-divider"></div>
+    <div class="sb-label">Community</div>
+    <a href="#u-register" class="sb-item" data-guide="user"><span class="sb-ico">👤</span>Creating an Account</a>
+    <a href="#u-challenge" class="sb-item" data-guide="user"><span class="sb-ico">⚔️</span>30-Day Challenge</a>
+    <a href="#u-leaderboard" class="sb-item" data-guide="user"><span class="sb-ico">🏆</span>Leaderboard</a>
+    <div class="sb-divider"></div>
+    <div class="sb-label">Features</div>
+    <a href="#u-workout" class="sb-item" data-guide="user"><span class="sb-ico">💪</span>Workout Plans</a>
+    <a href="#u-diet" class="sb-item" data-guide="user"><span class="sb-ico">🥗</span>Diet Plans</a>
+    <a href="#u-music" class="sb-item" data-guide="user"><span class="sb-ico">🎵</span>Music Player</a>
+    <a href="#u-pwa" class="sb-item" data-guide="user"><span class="sb-ico">📱</span>Install the App</a>
+    <div class="sb-divider"></div>
+    <div class="sb-label">Support</div>
+    <a href="#u-faq" class="sb-item" data-guide="user"><span class="sb-ico">❓</span>FAQ</a>
+    <a href="#u-contact" class="sb-item" data-guide="user"><span class="sb-ico">💬</span>Contact Us</a>
+  </nav>
+
+  <main class="main">
+
+    <!-- HERO -->
+    <div class="hero" id="u-welcome">
+      <div class="hero-badge">📖 User Guide</div>
+      <h1>WELCOME TO<br><span>MUFASA</span><br>STRENGTH</h1>
+      <p>Kenya's #1 home gym equipment store. This guide walks you through everything — browsing products, placing an order, joining the challenge, and getting the most out of the site.</p>
+      <div class="hero-chips">
+        <div class="chip"><span class="dot"></span>Rubber Dumbbells 2KG–35KG</div>
+        <div class="chip"><span class="dot"></span>WhatsApp Checkout</div>
+        <div class="chip"><span class="dot"></span>Nationwide Delivery</div>
+        <div class="chip"><span class="dot"></span>30-Day Challenge</div>
+      </div>
+    </div>
+
+    <!-- 1. NAVIGATING -->
+    <section class="section" id="u-navigate">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <div><div class="section-title">NAVIGATING THE SITE</div><div class="section-sub">Finding your way around</div></div>
+      </div>
+      <div class="grid3">
+        <div class="feat"><div class="feat-ico">🏠</div><div class="feat-title">Home / Hero</div><p>The main landing section with the shop button and key info about MUFASA.</p></div>
+        <div class="feat"><div class="feat-ico">🏋️</div><div class="feat-title">Shop</div><p>Browse all dumbbell products — singles and pairs — with pricing and WhatsApp order buttons.</p></div>
+        <div class="feat"><div class="feat-ico">⚔️</div><div class="feat-title">Challenge</div><p>View the active 30-Day Fitness Challenge, join it, and track your progress.</p></div>
+        <div class="feat"><div class="feat-ico">🏆</div><div class="feat-title">Leaderboard</div><p>See who's leading the 30-day challenge — ranked by workout sessions completed.</p></div>
+        <div class="feat"><div class="feat-ico">💪</div><div class="feat-title">Workouts</div><p>Access free weekly training plans designed for your home gym equipment.</p></div>
+        <div class="feat"><div class="feat-ico">👤</div><div class="feat-title">Register</div><p>Join the MUFASA Pride — create your free account to unlock all features.</p></div>
+      </div>
+      <div class="card" style="margin-top:14px;">
+        <div class="card-title">🧭 Using the Navigation Menu</div>
+        <p>The top navigation bar lets you jump to any section instantly. On mobile, tap the <strong>☰ hamburger icon</strong> (top right) to open the full menu. You can also use the <strong>🔍 search icon</strong> in the navbar to search for specific products or sections.</p>
+      </div>
+      <div class="alert alert-tip"><span class="alert-ico">💡</span><div><strong>Tip:</strong> On desktop, move your mouse around — MUFASA has a custom gold cursor that follows your movements!</div></div>
+    </section>
+
+    <!-- 2. PRODUCTS -->
+    <section class="section" id="u-products">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <div><div class="section-title">BROWSING PRODUCTS</div><div class="section-sub">Singles, pairs & all sizes</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">🏋️ What We Sell</div>
+        <p>MUFASA sells premium <strong>rubber-coated dumbbells</strong> — available as singles or pairs, ranging from <strong>2KG to 35KG</strong>. All weights are high-quality rubber coated to protect your floors and grip.</p>
+      </div>
+      <div class="grid2" style="margin-top:14px;">
+        <div class="prod-card"><div class="prod-range">Singles</div><div class="prod-name">Individual Dumbbells</div><div class="prod-desc">Buy a single dumbbell in any weight from 2KG to 35KG. Great for asymmetric training or replacing a single weight.</div><div class="prod-price">From KES 600 / piece</div></div>
+        <div class="prod-card"><div class="prod-range">Pairs</div><div class="prod-name">Dumbbell Pairs</div><div class="prod-desc">Two matching dumbbells of the same weight. Perfect for standard training — chest press, curls, shoulder press.</div><div class="prod-price">From KES 1,100 / pair</div></div>
+      </div>
+      <div class="alert alert-tip"><span class="alert-ico">💡</span><div><strong>Not sure what weight to get?</strong> Scroll to the <strong>Workouts</strong> section — the training plans recommend specific weights based on your fitness level.</div></div>
+    </section>
+
+    <!-- 3. ORDERING -->
+    <section class="section" id="u-order">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <div><div class="section-title">PLACING AN ORDER</div><div class="section-sub">Fast WhatsApp checkout</div></div>
+      </div>
+      <div class="card"><div class="card-title">💬 How MUFASA Checkout Works</div><p>MUFASA uses <strong>WhatsApp checkout</strong> — no account login or credit card forms needed. When you click the Order button on any product, your phone's WhatsApp opens with a pre-filled message ready to send.</p></div>
+      <div class="steps">
+        <div class="step"><div class="step-body"><strong>Browse the Shop section</strong><p>Scroll down to the Shop on the website. Browse all available dumbbell weights and sizes.</p></div></div>
+        <div class="step"><div class="step-body"><strong>Select your weight & click Order via WhatsApp</strong><p>Find the product you want and tap the green <strong>"Order via WhatsApp"</strong> button. Your WhatsApp will open automatically.</p></div></div>
+        <div class="step"><div class="step-body"><strong>Send the pre-filled message</strong><p>A message is already typed for you. Just hit <strong>Send</strong> — our team receives it instantly.</p></div></div>
+        <div class="step"><div class="step-body"><strong>Confirm & pay via M-Pesa</strong><p>Our team replies with payment details. Pay via <strong>M-Pesa</strong> and send confirmation.</p></div></div>
+        <div class="step"><div class="step-body"><strong>Receive your delivery</strong><p>We deliver <strong>nationwide across Kenya</strong>. Nairobi orders often arrive same day or next day.</p></div></div>
+      </div>
+      <div class="alert alert-success"><span class="alert-ico">✅</span><div>No account needed to order! Just tap the WhatsApp button and we handle the rest.</div></div>
+    </section>
+
+    <!-- 4. DELIVERY -->
+    <section class="section" id="u-delivery">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <div><div class="section-title">DELIVERY & PAYMENT</div><div class="section-sub">How you pay and receive your order</div></div>
+      </div>
+      <div class="grid2">
+        <div class="card"><div class="card-title">💳 Payment Methods</div><p><strong>M-Pesa</strong> is the primary payment method. After placing your WhatsApp order, our team sends you the M-Pesa till or paybill number to complete payment.</p><p>Cash on delivery may be available for select Nairobi locations — ask our team on WhatsApp.</p></div>
+        <div class="card"><div class="card-title">🚚 Delivery Coverage</div><p>We deliver <strong>nationwide across Kenya</strong> — Nairobi, Mombasa, Kisumu, Nakuru, Eldoret and all counties.</p><p>Delivery fees vary by location. Our team will confirm the fee when you send your order.</p></div>
+      </div>
+      <div class="card" style="margin-top:0;">
+        <div class="card-title">⏱️ Delivery Timeframes</div>
+        <div style="margin-top:10px;">
+          <div class="d-row"><span class="d-label">Nairobi CBD & Suburbs</span><span class="tag tag-green">Same / Next Day</span></div>
+          <div class="d-row"><span class="d-label">Major Towns (Mombasa, Kisumu, Nakuru)</span><span class="tag tag-gold">1–2 Days</span></div>
+          <div class="d-row"><span class="d-label">Other Counties & Rural Areas</span><span class="tag tag-blue">2–4 Days</span></div>
+        </div>
+      </div>
+      <div class="alert alert-tip"><span class="alert-ico">💡</span><div>Always confirm delivery costs with our team before paying. Costs are calculated based on weight and your location.</div></div>
+    </section>
+
+    <!-- 5. REGISTER -->
+    <section class="section" id="u-register">
+      <div class="section-header">
+        <div class="section-num">5</div>
+        <div><div class="section-title">CREATING YOUR ACCOUNT</div><div class="section-sub">Join the MUFASA Pride</div></div>
+      </div>
+      <div class="card"><div class="card-title">👤 Why Register?</div><p>Registering as a MUFASA member is <strong>free</strong> and gives you access to personalized workout plans, diet guides, the 30-Day Challenge, and the community leaderboard. All you need is your name and WhatsApp number.</p></div>
+      <div class="steps">
+        <div class="step"><div class="step-body"><strong>Click "Join the Pride" or "Register"</strong><p>Find the Register button on the homepage navigation or the Join section of the site.</p></div></div>
+        <div class="step"><div class="step-body"><strong>Enter your basic info</strong><p>Fill in your first name, last name, and WhatsApp number. No password needed.</p></div></div>
+        <div class="step"><div class="step-body"><strong>Select your fitness goal</strong><p>Choose from options like <em>Lose Weight, Build Muscle, Improve Stamina</em> etc. This personalises the content shown to you.</p></div></div>
+        <div class="step"><div class="step-body"><strong>Choose your fitness level</strong><p>Pick <em>Beginner, Intermediate,</em> or <em>Advanced</em>. Your workout plans are adjusted to your level.</p></div></div>
+        <div class="step"><div class="step-body"><strong>Opt into the 30-Day Challenge (optional)</strong><p>Tick the challenge box if you'd like to compete on the leaderboard. You can skip this and join later.</p></div></div>
+        <div class="step"><div class="step-body"><strong>Done — Welcome to the Pride! 🦁</strong><p>Confetti drops, a success message appears, and you're redirected to WhatsApp to receive your welcome message.</p></div></div>
+      </div>
+    </section>
+
+    <!-- 6. CHALLENGE -->
+    <section class="section" id="u-challenge">
+      <div class="section-header">
+        <div class="section-num">6</div>
+        <div><div class="section-title">30-DAY CHALLENGE</div><div class="section-sub">Compete, improve & win prizes</div></div>
+      </div>
+      <div class="card"><div class="card-title">⚔️ What Is the Challenge?</div><p>MUFASA runs a <strong>30-Day Fitness Challenge</strong> — a monthly competition where members log their workout sessions. The member with the most sessions at the end of the month wins a prize (cash, equipment, or voucher).</p></div>
+      <div class="grid2" style="margin-top:14px;">
+        <div class="feat" style="text-align:left;"><div class="feat-ico">🏆</div><div class="feat-title">What You Win</div><p>Monthly prize announced at the start of each challenge — typically cash, MUFASA equipment, or a training voucher.</p></div>
+        <div class="feat" style="text-align:left;"><div class="feat-ico">📊</div><div class="feat-title">How You Rank</div><p>Your session count determines your rank. The more workouts you log with our team, the higher you climb.</p></div>
+      </div>
+      <div class="card" style="margin-top:14px;"><div class="card-title">📝 Logging Your Workouts</div><p>After each workout session, <strong>WhatsApp us on 0115228712</strong> and tell us you've completed a session. Our team updates your session count on the leaderboard.</p></div>
+      <div class="alert alert-tip"><span class="alert-ico">💡</span><div>Take a short workout video or selfie and send it on WhatsApp as proof — this helps us update your sessions faster.</div></div>
+    </section>
+
+    <!-- 7. LEADERBOARD -->
+    <section class="section" id="u-leaderboard">
+      <div class="section-header">
+        <div class="section-num">7</div>
+        <div><div class="section-title">LEADERBOARD</div><div class="section-sub">See where you rank</div></div>
+      </div>
+      <div class="card"><div class="card-title">🏆 How the Leaderboard Works</div><p>The <strong>live leaderboard</strong> shows all challenge participants ranked by sessions. It updates in real time as our admin team logs your sessions.</p></div>
+      <div class="grid2">
+        <div class="card"><div class="card-title">📍 Finding the Leaderboard</div><p>Scroll to the <strong>Challenge</strong> section of the website, or click <strong>Leaderboard</strong> in the top navigation menu.</p></div>
+        <div class="card"><div class="card-title">⬆️ Moving Up the Ranks</div><p>Complete more workouts and report them on WhatsApp. Each logged session adds to your count and moves you up the board.</p></div>
+      </div>
+    </section>
+
+    <!-- 8. WORKOUT PLANS -->
+    <section class="section" id="u-workout">
+      <div class="section-header">
+        <div class="section-num">8</div>
+        <div><div class="section-title">FREE WORKOUT PLANS</div><div class="section-sub">Train smarter at home</div></div>
+      </div>
+      <div class="card"><div class="card-title">💪 What Are the Workout Plans?</div><p>MUFASA provides <strong>free weekly training plans</strong> designed specifically for home gym use with dumbbells. Plans are tailored for different goals and fitness levels.</p></div>
+      <div class="grid3">
+        <div class="feat"><div class="feat-ico">🔰</div><div class="feat-title">Beginner</div><p>Light weights, simple movements, rest-heavy. Great if you're just starting out.</p></div>
+        <div class="feat"><div class="feat-ico">⚡</div><div class="feat-title">Intermediate</div><p>Progressive overload, compound exercises, balanced splits for all muscle groups.</p></div>
+        <div class="feat"><div class="feat-ico">🔥</div><div class="feat-title">Advanced</div><p>High-intensity, superset training, minimal rest. For serious lifters pushing limits.</p></div>
+      </div>
+      <div class="alert alert-tip" style="margin-top:14px;"><span class="alert-ico">💡</span><div><strong>New plans every month!</strong> Bookmark the site and check back often for fresh routines.</div></div>
+    </section>
+
+    <!-- 9. DIET PLANS -->
+    <section class="section" id="u-diet">
+      <div class="section-header">
+        <div class="section-num">9</div>
+        <div><div class="section-title">FREE DIET PLANS</div><div class="section-sub">Fuel your training right</div></div>
+      </div>
+      <div class="card"><div class="card-title">🥗 What Are the Diet Plans?</div><p>Alongside workouts, MUFASA provides <strong>free meal plans</strong> — practical, affordable Kenyan-friendly diets to support your fitness goals. Plans include breakfast, lunch, dinner, and snacks with calorie and protein targets.</p></div>
+      <div class="grid2">
+        <div class="card"><div class="card-title">🔥 Fat Loss Plan</div><p>Calorie-controlled meals to help you lose weight while maintaining muscle mass. Includes filling, nutritious Kenyan staples.</p></div>
+        <div class="card"><div class="card-title">💪 Muscle Gain Plan</div><p>High-protein, calorie-surplus meals designed to support muscle growth alongside your dumbbell training.</p></div>
+      </div>
+    </section>
+
+    <!-- 10. MUSIC -->
+    <section class="section" id="u-music">
+      <div class="section-header">
+        <div class="section-num">10</div>
+        <div><div class="section-title">MUSIC PLAYER</div><div class="section-sub">Workout vibes built right in</div></div>
+      </div>
+      <div class="card"><div class="card-title">🎵 The Built-In Music Player</div><p>MUFASA has a <strong>built-in music player</strong> — a curated playlist of workout tracks you can listen to directly on the site while you browse or plan your sessions. No Spotify or YouTube needed.</p></div>
+      <div class="steps">
+        <div class="step"><div class="step-body"><strong>Scroll to the Music section</strong><p>Find the music player in the dedicated Music / Vibes section of the website.</p></div></div>
+        <div class="step"><div class="step-body"><strong>Click Play on any track</strong><p>Tap any song in the playlist to start playing it. Use the playback controls to manage the audio.</p></div></div>
+        <div class="step"><div class="step-body"><strong>Let it keep playing</strong><p>The music continues playing as you scroll around the site. Use it as your workout background music!</p></div></div>
+      </div>
+      <div class="alert alert-info"><span class="alert-ico">ℹ️</span><div>The music player requires an internet connection to stream. Make sure your data or WiFi is on before playing tracks.</div></div>
+    </section>
+
+    <!-- 11. PWA -->
+    <section class="section" id="u-pwa">
+      <div class="section-header">
+        <div class="section-num">11</div>
+        <div><div class="section-title">INSTALL THE APP</div><div class="section-sub">Add MUFASA to your home screen</div></div>
+      </div>
+      <div class="card"><div class="card-title">📱 What Is the App?</div><p>MUFASA is a <strong>Progressive Web App (PWA)</strong> — you can install it on your phone's home screen just like a regular app. It works offline, loads fast, and doesn't need Google Play or App Store.</p></div>
+      <div class="grid2">
+        <div class="card"><div class="card-title">🤖 Android</div><div class="steps" style="margin-top:6px;"><div class="step"><div class="step-body"><strong>Open the site in Chrome</strong><p>Visit the MUFASA website in your Chrome browser.</p></div></div><div class="step"><div class="step-body"><strong>Tap the Install banner</strong><p>A banner appears at the bottom — tap <strong>Install</strong>.</p></div></div><div class="step"><div class="step-body"><strong>Find MUFASA on your home screen</strong><p>The app icon appears on your phone's home screen. Tap to launch!</p></div></div></div></div>
+        <div class="card"><div class="card-title">🍎 iPhone (iOS)</div><div class="steps" style="margin-top:6px;"><div class="step"><div class="step-body"><strong>Open the site in Safari</strong><p>Visit MUFASA in your Safari browser (must be Safari, not Chrome).</p></div></div><div class="step"><div class="step-body"><strong>Tap the Share icon</strong><p>Tap the <strong>□↑ Share</strong> button at the bottom of Safari.</p></div></div><div class="step"><div class="step-body"><strong>Tap "Add to Home Screen"</strong><p>Scroll down, tap <strong>Add to Home Screen</strong>, then confirm.</p></div></div></div></div>
+      </div>
+    </section>
+
+    <!-- 12. FAQ -->
+    <section class="section" id="u-faq">
+      <div class="section-header">
+        <div class="section-num">12</div>
+        <div><div class="section-title">FREQUENTLY ASKED QUESTIONS</div><div class="section-sub">Quick answers</div></div>
+      </div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Do I need to create an account to buy? <span class="fq-arr">+</span></div><div class="faq-a"><p>No! You can order directly via WhatsApp without registering. Just click the "Order via WhatsApp" button on any product and our team will assist you.</p></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What payment methods do you accept? <span class="fq-arr">+</span></div><div class="faq-a"><p>We accept M-Pesa (the main method). In some Nairobi areas, cash on delivery may also be available — ask our team on WhatsApp to confirm.</p></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How long does delivery take? <span class="fq-arr">+</span></div><div class="faq-a"><p>Nairobi orders are typically delivered same day or next day. Other major towns take 1–2 days. Rural counties can take 2–4 days.</p></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Can I return or exchange a product? <span class="fq-arr">+</span></div><div class="faq-a"><p>If there's a defect or you received the wrong item, contact us immediately on WhatsApp at 0115228712 with photos. We will arrange an exchange or resolution promptly.</p></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How do I join the 30-Day Challenge? <span class="fq-arr">+</span></div><div class="faq-a"><p>Tick the "Join the Challenge" box when registering. If you're already a member, message us on WhatsApp at 0115228712 and ask to be added to the current challenge.</p></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Are the dumbbells good for floor use? <span class="fq-arr">+</span></div><div class="faq-a"><p>Yes! All MUFASA dumbbells are rubber-coated, meaning they protect your floors and won't scratch or dent surfaces. Ideal for home gym use.</p></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Is the site safe to use? <span class="fq-arr">+</span></div><div class="faq-a"><p>Absolutely. The site does not store your credit card or payment information. Payments are made via M-Pesa directly to our business number.</p></div></div>
+    </section>
+
+    <!-- 13. CONTACT -->
+    <section class="section" id="u-contact">
+      <div class="section-header">
+        <div class="section-num">13</div>
+        <div><div class="section-title">CONTACT US</div><div class="section-sub">We're always available on WhatsApp</div></div>
+      </div>
+      <div class="grid2">
+        <div class="card"><div class="card-title">📱 WhatsApp Number</div><p style="font-family:'Anton',sans-serif;font-size:1.35rem;color:var(--g);margin:8px 0;">0115 228 712</p><p>Available Monday – Saturday, 8AM – 8PM.</p></div>
+        <div class="card"><div class="card-title">⏱️ Response Times</div><p><strong style="color:var(--w);">Orders:</strong> Usually within 30 minutes<br><strong style="color:var(--w);">General queries:</strong> Within 1–2 hours<br><strong style="color:var(--w);">Challenge/sessions:</strong> Same day</p></div>
+      </div>
+      <div style="margin-top:20px;">
+        <a href="https://wa.me/254115228712?text=Hello%20MUFASA!%20I%20need%20help%20with..." class="btn-wa" target="_blank">💬 Chat With Us on WhatsApp</a>
+      </div>
+      <div class="alert alert-success" style="margin-top:16px;"><span class="alert-ico">🦁</span><div><strong>Welcome to the Pride!</strong> Whether you're here to buy, train, compete, or just explore — MUFASA has everything you need to forge your legacy. Let's get to work.</div></div>
+    </section>
+
+    <!-- QUICK TIPS FOOTER -->
+    <div style="background:linear-gradient(135deg,var(--card),var(--card2));border:1px solid var(--b2);border-radius:var(--r3);padding:32px 36px;margin-top:44px;margin-bottom:4px;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--g);margin-bottom:10px;">⚡ Quick Tips</div>
+      <div style="font-family:'Anton',sans-serif;font-size:1.7rem;color:var(--w);margin-bottom:18px;">GET THE MOST <span style="color:var(--g);">OUT OF MUFASA</span></div>
+      <ul class="checklist">
+        <li>Install the MUFASA app on your home screen for fast, offline access</li>
+        <li>Register as a member — it's free and unlocks personalised workout and diet plans</li>
+        <li>Join the 30-Day Challenge every month for a chance to win prizes</li>
+        <li>Log every workout session on WhatsApp to climb the leaderboard</li>
+        <li>Use the built-in music player as your workout soundtrack</li>
+        <li>Check back monthly for new workout and diet plans</li>
+        <li>Share the site with a friend — the more the Pride grows, the better the prizes!</li>
+      </ul>
+    </div>
+
+  </main>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     ADMIN GUIDE
+══════════════════════════════════════ -->
+<div class="guide-shell" id="shell-admin">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sb-admin">
+    <div class="sb-label">Overview</div>
+    <a href="#a-overview" class="sb-item act" data-guide="admin"><span class="sb-ico">🏠</span>Getting Started</a>
+    <a href="#a-firebase" class="sb-item" data-guide="admin"><span class="sb-ico">🔥</span>Firebase Console</a>
+    <div class="sb-divider"></div>
+    <div class="sb-label">Database</div>
+    <a href="#a-members" class="sb-item" data-guide="admin"><span class="sb-ico">👥</span>Members</a>
+    <a href="#a-trackers" class="sb-item" data-guide="admin"><span class="sb-ico">🏆</span>Trackers</a>
+    <a href="#a-challenge" class="sb-item" data-guide="admin"><span class="sb-ico">⚔️</span>Challenge Admin</a>
+    <a href="#a-leaderboard" class="sb-item" data-guide="admin"><span class="sb-ico">📊</span>Leaderboard</a>
+    <div class="sb-divider"></div>
+    <div class="sb-label">Content</div>
+    <a href="#a-workout" class="sb-item" data-guide="admin"><span class="sb-ico">💪</span>Workout Admin</a>
+    <a href="#a-diet" class="sb-item" data-guide="admin"><span class="sb-ico">🥗</span>Diet Admin</a>
+    <a href="#a-songs" class="sb-item" data-guide="admin"><span class="sb-ico">🎵</span>Songs / Music</a>
+    <a href="#a-testimonials" class="sb-item" data-guide="admin"><span class="sb-ico">⭐</span>Testimonials</a>
+    <div class="sb-divider"></div>
+    <div class="sb-label">Orders & Setup</div>
+    <a href="#a-orders" class="sb-item" data-guide="admin"><span class="sb-ico">📦</span>WhatsApp Orders</a>
+    <a href="#a-whatsapp" class="sb-item" data-guide="admin"><span class="sb-ico">💬</span>WhatsApp Setup</a>
+    <div class="sb-divider"></div>
+    <div class="sb-label">Site</div>
+    <a href="#a-seo" class="sb-item" data-guide="admin"><span class="sb-ico">🔍</span>SEO & PWA</a>
+    <a href="#a-deploy" class="sb-item" data-guide="admin"><span class="sb-ico">🚀</span>Deployment</a>
+    <a href="#a-security" class="sb-item" data-guide="admin"><span class="sb-ico">🔒</span>Security</a>
+  </nav>
+
+  <main class="main">
+
+    <!-- ADMIN HERO -->
+    <div class="hero" id="a-overview">
+      <div class="hero-badge">⚡ Admin Guide v1.0</div>
+      <h1>MUFASA <span>ADMIN</span><br>PANEL GUIDE</h1>
+      <p>Your complete reference for managing the MUFASA STRENGTH EQUIPMENT website — members, orders, content, Firebase database, and deployment.</p>
+      <div class="hero-stats">
+        <div class="hstat"><div class="hstat-n">9</div><div class="hstat-l">Sections</div></div>
+        <div class="hstat"><div class="hstat-n">Firebase</div><div class="hstat-l">Backend</div></div>
+        <div class="hstat"><div class="hstat-n">WhatsApp</div><div class="hstat-l">Orders</div></div>
+        <div class="hstat"><div class="hstat-n">0115228712</div><div class="hstat-l">Admin Line</div></div>
+      </div>
+    </div>
+
+    <!-- A1. FIREBASE CONSOLE -->
+    <section class="section" id="a-firebase">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <div><div class="section-title">FIREBASE CONSOLE</div><div class="section-sub">Your database control center</div></div>
+      </div>
+      <div class="card"><div class="card-title">🔥 Accessing Firebase</div><p>All site data lives in Firebase Realtime Database. To manage it, go to the Firebase Console.</p></div>
+      <div class="steps">
+        <div class="step"><div class="step-body"><strong>Go to Firebase Console</strong><p>Open your browser and visit: <code>console.firebase.google.com</code></p></div></div>
+        <div class="step"><div class="step-body"><strong>Select Your Project</strong><p>Click on the project named <code>mufasa-strength-0719</code></p></div></div>
+        <div class="step"><div class="step-body"><strong>Open Realtime Database</strong><p>In the left sidebar click <strong>Build → Realtime Database</strong>. All your members, trackers, songs, and settings are here.</p></div></div>
+      </div>
+      <div class="alert alert-info"><span class="alert-ico">ℹ️</span><div>Your Firebase project URL is: <code>https://mufasa-strength-0719-default-rtdb.firebaseio.com</code></div></div>
+      <div class="card" style="margin-top:16px;">
+        <div class="card-title">🗂️ Database Structure</div>
+        <div class="fb-tree">
+          <div class="fb-root">mufasa-strength-0719</div>
+          <div class="fb-col">📁 members/</div><div class="fb-doc">— {memberId} → name, phone, city, goal…</div>
+          <div class="fb-col">📁 trackers/</div><div class="fb-doc">— {trackerId} → name, phone, sessions…</div>
+          <div class="fb-col">📁 songs/</div><div class="fb-doc">— {songId} → title, artist, url…</div>
+          <div class="fb-col">📁 testimonials/</div><div class="fb-doc">— {id} → name, text, rating…</div>
+          <div class="fb-col">📁 data/</div>
+          <div class="fb-doc">📄 challenge → name, startDate, endDate, prize…</div>
+          <div class="fb-doc">📄 workoutadmin → weekly plan data</div>
+          <div class="fb-doc">📄 dietadmin → meal plan data</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- A2. MEMBERS -->
+    <section class="section" id="a-members">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <div><div class="section-title">MANAGING MEMBERS</div><div class="section-sub">View, edit & export registrations</div></div>
+      </div>
+      <div class="card"><div class="card-title">👥 Where Members Are Stored</div><p>Every person who registers is saved under <code>members/</code> in Firebase. You also receive a WhatsApp notification on <strong>0115228712</strong> the moment someone registers.</p></div>
+      <div class="tbl-wrap" style="margin-top:16px;">
+        <table><thead><tr><th>Field</th><th>What It Means</th><th>Example</th></tr></thead><tbody>
+          <tr><td><code>fname</code> / <code>lname</code></td><td>Member's full name</td><td>John Kamau</td></tr>
+          <tr><td><code>phone</code></td><td>WhatsApp number</td><td>0712345678</td></tr>
+          <tr><td><code>city</code> / <code>county</code></td><td>Location</td><td>Nairobi / Westlands</td></tr>
+          <tr><td><code>goal</code></td><td>Fitness goal code</td><td>lose_weight, build_muscle…</td></tr>
+          <tr><td><code>level</code></td><td>Fitness level</td><td>beginner / intermediate</td></tr>
+          <tr><td><code>challengeOptIn</code></td><td>Joined 30-day challenge?</td><td>true / false</td></tr>
+          <tr><td><code>ts</code></td><td>Registration timestamp</td><td>ISO date string</td></tr>
+        </tbody></table>
+      </div>
+      <div class="card"><div class="card-title">📤 Exporting Members to Excel</div><p>In Firebase Console, click the <strong>⋮ menu</strong> next to <code>members</code> → <strong>Export JSON</strong>. Paste the JSON into any online JSON-to-CSV converter to get an Excel-ready file.</p></div>
+      <div class="alert alert-warn"><span class="alert-ico">⚠️</span><div>Deleting a member in Firebase is <strong>permanent and cannot be undone</strong>. Always export a backup first.</div></div>
+    </section>
+
+    <!-- A3. TRACKERS -->
+    <section class="section" id="a-trackers">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <div><div class="section-title">TRACKERS</div><div class="section-sub">30-Day challenge participants</div></div>
+      </div>
+      <div class="card"><div class="card-title">🏆 What Are Trackers?</div><p>When a member opts into the <strong>30-Day Challenge</strong>, a tracker record is automatically created under <code>trackers/</code>. This is used to power the leaderboard on the site.</p></div>
+      <div class="tbl-wrap"><table><thead><tr><th>Field</th><th>Description</th></tr></thead><tbody>
+        <tr><td><code>name</code></td><td>Member's full name</td></tr>
+        <tr><td><code>phone</code></td><td>WhatsApp number (used as unique ID)</td></tr>
+        <tr><td><code>loc</code></td><td>City or county location</td></tr>
+        <tr><td><code>startDate</code></td><td>When they joined the challenge</td></tr>
+        <tr><td><code>sessions</code></td><td>Number of logged workout sessions (you update this manually)</td></tr>
+      </tbody></table></div>
+      <div class="alert alert-info" style="margin-top:14px;"><span class="alert-ico">💡</span><div>To update a member's session count: Firebase → <code>trackers</code> → find the member → click <code>sessions</code> value → type the new number → press Enter.</div></div>
+    </section>
+
+    <!-- A4. CHALLENGE -->
+    <section class="section" id="a-challenge">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <div><div class="section-title">CHALLENGE ADMIN</div><div class="section-sub">Configure the active 30-day challenge</div></div>
+      </div>
+      <div class="card"><div class="card-title">⚔️ Challenge Settings Location</div><div class="path">Firebase → <span>data</span> <span class="sep">/</span> <span>challenge</span></div><p>Edit the fields under <code>data/challenge</code> to control what appears on the challenge section of the website.</p></div>
+      <div class="tbl-wrap"><table><thead><tr><th>Field</th><th>What It Controls</th><th>Example</th></tr></thead><tbody>
+        <tr><td><code>name</code></td><td>Challenge name displayed on site</td><td>MUFASA 30-Day Shred</td></tr>
+        <tr><td><code>startDate</code></td><td>Challenge start date</td><td>2025-07-01</td></tr>
+        <tr><td><code>endDate</code></td><td>Challenge end date</td><td>2025-07-30</td></tr>
+        <tr><td><code>prize</code></td><td>Prize description</td><td>KES 5,000 + Trophy</td></tr>
+        <tr><td><code>description</code></td><td>Short challenge description</td><td>30 days, 30 sessions…</td></tr>
+        <tr><td><code>active</code></td><td>Is the challenge live?</td><td>true / false</td></tr>
+      </tbody></table></div>
+      <div class="alert alert-success"><span class="alert-ico">✅</span><div>Changes to Firebase appear live on the site automatically — no re-deployment needed.</div></div>
+    </section>
+
+    <!-- A5. LEADERBOARD -->
+    <section class="section" id="a-leaderboard">
+      <div class="section-header">
+        <div class="section-num">5</div>
+        <div><div class="section-title">LEADERBOARD</div><div class="section-sub">Managing challenge rankings</div></div>
+      </div>
+      <div class="card"><div class="card-title">📊 How the Leaderboard Works</div><p>The leaderboard reads from <code>trackers/</code> and ranks members by their <code>sessions</code> count. To move someone up or down — just edit their <code>sessions</code> count in Firebase. The site updates in real-time.</p></div>
+      <div class="card"><div class="card-title">➕ Manually Adding a Tracker</div><p>Firebase → <code>trackers</code> → click <strong>+ (Add)</strong> icon → enter the following JSON:</p>
+        <div class="code-block"><span class="ck">{</span><br>&nbsp;&nbsp;<span class="cv">"name"</span>: <span class="cv">"John Kamau"</span>,<br>&nbsp;&nbsp;<span class="cv">"phone"</span>: <span class="cv">"0712345678"</span>,<br>&nbsp;&nbsp;<span class="cv">"loc"</span>: <span class="cv">"Nairobi"</span>,<br>&nbsp;&nbsp;<span class="cv">"startDate"</span>: <span class="cv">"2025-07-01T00:00:00.000Z"</span>,<br>&nbsp;&nbsp;<span class="cv">"sessions"</span>: <span class="cv">0</span><br><span class="ck">}</span></div>
+      </div>
+    </section>
+
+    <!-- A6. WORKOUT -->
+    <section class="section" id="a-workout">
+      <div class="section-header">
+        <div class="section-num">6</div>
+        <div><div class="section-title">WORKOUT ADMIN</div><div class="section-sub">Weekly training plan management</div></div>
+      </div>
+      <div class="card"><div class="card-title">💪 Workout Plan Location</div><div class="path">Firebase → <span>data</span> <span class="sep">/</span> <span>workoutadmin</span></div><p>This controls the workout section on the website. You can update exercises, sets, reps, and rest times here without touching any code.</p></div>
+      <div class="card"><div class="card-title">📝 Exercise JSON Structure</div>
+        <div class="code-block"><span class="ck">{</span><br>&nbsp;&nbsp;<span class="cv">"day"</span>: <span class="cv">"Monday"</span>,<br>&nbsp;&nbsp;<span class="cv">"focus"</span>: <span class="cv">"Upper Body"</span>,<br>&nbsp;&nbsp;<span class="cv">"exercises"</span>: [<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="ck">{</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cv">"name"</span>: <span class="cv">"Dumbbell Curl"</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cv">"sets"</span>: <span class="cv">3</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cv">"reps"</span>: <span class="cv">"12-15"</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cv">"rest"</span>: <span class="cv">"60s"</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="ck">}</span><br>&nbsp;&nbsp;]<br><span class="ck">}</span></div>
+      </div>
+    </section>
+
+    <!-- A7. DIET -->
+    <section class="section" id="a-diet">
+      <div class="section-header">
+        <div class="section-num">7</div>
+        <div><div class="section-title">DIET ADMIN</div><div class="section-sub">Meal plan and nutrition management</div></div>
+      </div>
+      <div class="card"><div class="card-title">🥗 Diet Plan Location</div><div class="path">Firebase → <span>data</span> <span class="sep">/</span> <span>dietadmin</span></div><p>Controls the nutrition/diet section. Structured by meal type or day.</p></div>
+      <div class="card"><div class="card-title">📝 Typical Diet Admin Structure</div>
+        <div class="code-block"><span class="ck">{</span><br>&nbsp;&nbsp;<span class="cv">"breakfast"</span>: <span class="cv">"Oats + 2 boiled eggs + black coffee"</span>,<br>&nbsp;&nbsp;<span class="cv">"lunch"</span>: <span class="cv">"Brown rice + chicken breast + kale"</span>,<br>&nbsp;&nbsp;<span class="cv">"dinner"</span>: <span class="cv">"Sweet potato + tilapia + steamed veg"</span>,<br>&nbsp;&nbsp;<span class="cv">"snacks"</span>: <span class="cv">"Groundnuts + banana"</span>,<br>&nbsp;&nbsp;<span class="cv">"calories"</span>: <span class="cv">2200</span>,<br>&nbsp;&nbsp;<span class="cv">"protein"</span>: <span class="cv">"150g"</span><br><span class="ck">}</span></div>
+      </div>
+    </section>
+
+    <!-- A8. SONGS -->
+    <section class="section" id="a-songs">
+      <div class="section-header">
+        <div class="section-num">8</div>
+        <div><div class="section-title">SONGS / MUSIC PLAYER</div><div class="section-sub">Manage the workout playlist</div></div>
+      </div>
+      <div class="card"><div class="card-title">🎵 Music Collection Location</div><div class="path">Firebase → <span>songs</span></div><p>All tracks are stored under the <code>songs</code> collection in Firebase.</p></div>
+      <div class="tbl-wrap"><table><thead><tr><th>Field</th><th>Description</th><th>Example</th></tr></thead><tbody>
+        <tr><td><code>title</code></td><td>Song title</td><td>Power Up</td></tr>
+        <tr><td><code>artist</code></td><td>Artist name</td><td>Sauti Sol</td></tr>
+        <tr><td><code>url</code></td><td>Direct audio file URL (MP3/OGG)</td><td>https://… /song.mp3</td></tr>
+        <tr><td><code>cover</code></td><td>Album art image URL</td><td>https://… /cover.jpg</td></tr>
+        <tr><td><code>duration</code></td><td>Song length in seconds</td><td>215</td></tr>
+      </tbody></table></div>
+      <div class="alert alert-warn"><span class="alert-ico">⚠️</span><div>Use <strong>direct</strong> audio links only (ending in .mp3 or .ogg). Streaming links from Spotify or YouTube will not work in the player.</div></div>
+    </section>
+
+    <!-- A9. TESTIMONIALS -->
+    <section class="section" id="a-testimonials">
+      <div class="section-header">
+        <div class="section-num">9</div>
+        <div><div class="section-title">TESTIMONIALS</div><div class="section-sub">Customer reviews & social proof</div></div>
+      </div>
+      <div class="card"><div class="card-title">⭐ Adding a New Testimonial</div><p>Firebase → <code>testimonials</code> → click <strong>+</strong> → paste the JSON:</p>
+        <div class="code-block"><span class="ck">{</span><br>&nbsp;&nbsp;<span class="cv">"name"</span>: <span class="cv">"Wanjiru M."</span>,<br>&nbsp;&nbsp;<span class="cv">"location"</span>: <span class="cv">"Nairobi"</span>,<br>&nbsp;&nbsp;<span class="cv">"text"</span>: <span class="cv">"The 20KG pair is amazing quality, arrived next day!"</span>,<br>&nbsp;&nbsp;<span class="cv">"rating"</span>: <span class="cv">5</span>,<br>&nbsp;&nbsp;<span class="cv">"product"</span>: <span class="cv">"20KG Rubber Dumbbell Pair"</span>,<br>&nbsp;&nbsp;<span class="cv">"visible"</span>: <span class="cv">true</span><br><span class="ck">}</span></div>
+      </div>
+    </section>
+
+    <!-- A10. ORDERS -->
+    <section class="section" id="a-orders">
+      <div class="section-header">
+        <div class="section-num">10</div>
+        <div><div class="section-title">WHATSAPP ORDERS</div><div class="section-sub">How customers purchase & checkout</div></div>
+      </div>
+      <div class="card"><div class="card-title">📦 How Orders Work</div><p>MUFASA uses a <strong>WhatsApp-first checkout</strong>. When a customer clicks "Order", a pre-formatted message is sent to your WhatsApp number <code>+254115228712</code>.</p></div>
+      <div class="grid2">
+        <div class="card"><div class="card-title">✅ Confirming an Order</div><p>Reply to the customer's WhatsApp with payment instructions (M-Pesa till/number), then confirm dispatch once paid.</p></div>
+        <div class="card"><div class="card-title">🚚 Tracking Deliveries</div><p>Keep a WhatsApp group or spreadsheet of pending orders. Mark each as <span class="tag tag-gold">Pending</span>, <span class="tag tag-blue">Packed</span>, or <span class="tag tag-green">Delivered</span>.</p></div>
+      </div>
+    </section>
+
+    <!-- A11. WHATSAPP SETUP -->
+    <section class="section" id="a-whatsapp">
+      <div class="section-header">
+        <div class="section-num">11</div>
+        <div><div class="section-title">WHATSAPP NUMBER SETUP</div><div class="section-sub">Changing the admin WhatsApp number</div></div>
+      </div>
+      <div class="alert alert-warn"><span class="alert-ico">⚠️</span><div>Your current admin WhatsApp is <code>+254115228712</code>. To change this, edit the HTML file.</div></div>
+      <div class="card"><div class="card-title">📝 How to Change the WhatsApp Number</div><p>Open <code>index.html</code> in VS Code. Press <code>Ctrl+H</code> (Find & Replace). Search for <code>254115228712</code> and replace ALL occurrences with your new number in international format (no + or spaces). Save and re-upload.</p></div>
+    </section>
+
+    <!-- A12. SEO & PWA -->
+    <section class="section" id="a-seo">
+      <div class="section-header">
+        <div class="section-num">12</div>
+        <div><div class="section-title">SEO & PWA</div><div class="section-sub">Search visibility & app installation</div></div>
+      </div>
+      <div class="grid2">
+        <div class="card"><div class="card-title">🔍 SEO Meta Tags</div><p>Edit these lines in <code>&lt;head&gt;</code> of index.html:</p><div class="code-block" style="margin-top:8px;">&lt;<span class="ck">meta</span> name=<span class="cv">"description"</span><br>content=<span class="cv">"Your description"</span>&gt;<br>&lt;<span class="ck">meta</span> property=<span class="cv">"og:title"</span><br>content=<span class="cv">"Your title"</span>&gt;</div></div>
+        <div class="card"><div class="card-title">📱 PWA (App Install)</div><p>Edit <code>manifest.json</code> to update the app name, short name, and theme color.</p><div class="code-block" style="margin-top:8px;"><span class="ck">{</span><br>&nbsp;<span class="cv">"name"</span>: <span class="cv">"MUFASA"</span>,<br>&nbsp;<span class="cv">"short_name"</span>: <span class="cv">"MUFASA"</span>,<br>&nbsp;<span class="cv">"theme_color"</span>: <span class="cv">"#D4942A"</span><br><span class="ck">}</span></div></div>
+      </div>
+    </section>
+
+    <!-- A13. DEPLOYMENT -->
+    <section class="section" id="a-deploy">
+      <div class="section-header">
+        <div class="section-num">13</div>
+        <div><div class="section-title">DEPLOYMENT</div><div class="section-sub">Publishing updates to the live site</div></div>
+      </div>
+      <div class="tbl-wrap"><table><thead><tr><th>Hosting</th><th>How to Update</th><th>Speed</th></tr></thead><tbody>
+        <tr><td><strong>Netlify</strong></td><td>Drag & drop your folder at netlify.com/drop</td><td><span class="tag tag-green">Instant</span></td></tr>
+        <tr><td><strong>Firebase Hosting</strong></td><td>Run <code>firebase deploy</code> in terminal</td><td><span class="tag tag-green">Instant</span></td></tr>
+        <tr><td><strong>cPanel / Hostinger</strong></td><td>Upload via File Manager, replace old index.html</td><td><span class="tag tag-gold">1–5 min</span></td></tr>
+        <tr><td><strong>GitHub Pages</strong></td><td>Push changes to your repo's main branch</td><td><span class="tag tag-blue">2–5 min</span></td></tr>
+      </tbody></table></div>
+      <div class="alert alert-warn"><span class="alert-ico">⚠️</span><div>Always keep a <strong>backup copy</strong> of your index.html before making major changes. Save it as <code>index-backup-DATE.html</code>.</div></div>
+    </section>
+
+    <!-- A14. SECURITY -->
+    <section class="section" id="a-security">
+      <div class="section-header">
+        <div class="section-num">14</div>
+        <div><div class="section-title">SECURITY CHECKLIST</div><div class="section-sub">Keeping your site & data safe</div></div>
+      </div>
+      <ul class="checklist">
+        <li>Secure your Firebase Console with a strong password and 2-Factor Authentication (2FA)</li>
+        <li>Set Firebase Realtime Database rules to restrict write access — only authenticated users should write</li>
+        <li>Never share your Firebase API keys publicly or post them on social media</li>
+        <li>Regularly export your <code>members</code> data to a spreadsheet as a backup</li>
+        <li>Keep your WhatsApp Business number separate from your personal number</li>
+        <li>If you notice unauthorised data in Firebase, immediately change your Firebase project rules</li>
+        <li>Enable Firebase App Check for extra protection against abuse</li>
+      </ul>
+      <div class="card" style="margin-top:16px;">
+        <div class="card-title">🔒 Recommended Firebase Database Rules</div>
+        <div class="code-block"><span class="ck">{</span><br>&nbsp;&nbsp;<span class="cv">"rules"</span>: <span class="ck">{</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="cv">"testimonials"</span>: <span class="ck">{</span> <span class="cv">".read"</span>: <span class="cv">true</span>, <span class="cv">".write"</span>: <span class="cv">"auth != null"</span> <span class="ck">}</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="cv">"videos"</span>: <span class="ck">{</span> <span class="cv">".read"</span>: <span class="cv">true</span>, <span class="cv">".write"</span>: <span class="cv">"auth != null"</span> <span class="ck">}</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="cv">"songs"</span>: <span class="ck">{</span> <span class="cv">".read"</span>: <span class="cv">true</span>, <span class="cv">".write"</span>: <span class="cv">"auth != null"</span> <span class="ck">}</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="cv">"data"</span>: <span class="ck">{</span> <span class="cv">".read"</span>: <span class="cv">true</span>, <span class="cv">".write"</span>: <span class="cv">"auth != null"</span> <span class="ck">}</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="cv">"members"</span>: <span class="ck">{</span> <span class="cv">".read"</span>: <span class="cv">"auth != null"</span>, <span class="cv">".write"</span>: <span class="cv">"auth != null"</span> <span class="ck">}</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="cv">"trackers"</span>: <span class="ck">{</span> <span class="cv">".read"</span>: <span class="cv">"auth != null"</span>, <span class="cv">".write"</span>: <span class="cv">"auth != null"</span> <span class="ck">}</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="cv">"progress"</span>: <span class="ck">{</span> <span class="cv">".read"</span>: <span class="cv">"auth != null"</span>, <span class="cv">".write"</span>: <span class="cv">"auth != null"</span> <span class="ck">}</span><br>&nbsp;&nbsp;<span class="ck">}</span><br><span class="ck">}</span></div>
+      </div>
+    </section>
+
+    <!-- QUICK REFERENCE FOOTER -->
+    <div class="hero" style="margin-top:44px;margin-bottom:4px;">
+      <div class="hero-badge">⚡ Quick Reference</div>
+      <h1>ADMIN <span>QUICK</span><br>REFERENCE</h1>
+      <div style="margin-top:20px;display:flex;flex-direction:column;gap:10px;">
+        <div class="step" style="background:var(--bg);"><div class="step-body"><strong>Firebase Console</strong><p><code>console.firebase.google.com</code> → Project: <code>mufasa-strength-0719</code></p></div></div>
+        <div class="step" style="background:var(--bg);"><div class="step-body"><strong>Admin WhatsApp</strong><p><code>+254 115 228 712</code> — all orders and registrations notify this number</p></div></div>
+        <div class="step" style="background:var(--bg);"><div class="step-body"><strong>Database URL</strong><p><code>https://mufasa-strength-0719-default-rtdb.firebaseio.com</code></p></div></div>
+        <div class="step" style="background:var(--bg);"><div class="step-body"><strong>Live Site Changes</strong><p>Member data, challenge, workout, diet, songs — all update <strong>instantly</strong> via Firebase. HTML changes need re-upload.</p></div></div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+
+<!-- ══ LOCK SCREEN OVERLAY ══ -->
+<div id="lock-screen">
+  <div class="lock-box">
+    <div class="lock-icon">🔒</div>
+    <div class="lock-title">ADMIN ACCESS</div>
+    <div class="lock-sub">This guide is restricted to administrators.<br>Enter your MUFASA admin password to continue.</div>
+    <input class="lock-input" type="password" id="lock-pwd" placeholder="Enter password" onkeydown="if(event.key==='Enter')attemptUnlock()">
+    <button class="lock-btn" onclick="attemptUnlock()">⚡ Unlock Admin Guide</button>
+    <div class="lock-err" id="lock-err"></div>
+    <button class="lock-cancel" onclick="cancelLock()">← Back to User Guide</button>
+  </div>
+</div>
+
+<!-- SCROLL TOP -->
+<button id="top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+/* ── STATE ── */
+const ADM_KEY = 'muf_adm_pwd';
+let adminUnlocked = false;
+let currentTab = 'user';
+
+function getPwd(){return localStorage.getItem(ADM_KEY)||'muf@s@rul3s';}
+
+/* ── TAB SWITCHING ── */
+function switchTab(tab){
+  if(tab === 'admin' && !adminUnlocked){
+    showLock();
+    return;
+  }
+  activateTab(tab);
+}
+
+function activateTab(tab){
+  currentTab = tab;
+  document.getElementById('shell-user').classList.toggle('active', tab==='user');
+  document.getElementById('shell-admin').classList.toggle('active', tab==='admin');
+  document.getElementById('tab-user').classList.toggle('active', tab==='user');
+  document.getElementById('tab-admin').classList.toggle('active', tab==='admin');
+  document.getElementById('header-sub').textContent = tab==='user' ? 'User Guide' : 'Admin Guide';
+  document.getElementById('lock-ico').textContent = adminUnlocked ? '🔓' : '🔒';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ── LOCK SCREEN ── */
+function showLock(){
+  document.getElementById('lock-screen').classList.add('show');
+  document.getElementById('lock-pwd').value = '';
+  document.getElementById('lock-err').textContent = '';
+  setTimeout(()=>document.getElementById('lock-pwd').focus(), 100);
+}
+
+function hideLock(){
+  document.getElementById('lock-screen').classList.remove('show');
+}
+
+function cancelLock(){
+  hideLock();
+  activateTab('user');
+}
+
+function attemptUnlock(){
+  const pwd = document.getElementById('lock-pwd').value;
+  if(pwd === getPwd()){
+    adminUnlocked = true;
+    hideLock();
+    activateTab('admin');
+    document.getElementById('admin-badge').classList.add('show');
+    document.getElementById('logout-btn').classList.add('show');
+    document.getElementById('lock-ico').textContent = '🔓';
+  } else {
+    const err = document.getElementById('lock-err');
+    err.textContent = 'Incorrect password. Try again.';
+    document.getElementById('lock-pwd').value = '';
+    document.getElementById('lock-pwd').focus();
+    setTimeout(()=>err.textContent='', 3000);
+  }
+}
+
+function lockAdmin(){
+  adminUnlocked = false;
+  document.getElementById('admin-badge').classList.remove('show');
+  document.getElementById('logout-btn').classList.remove('show');
+  document.getElementById('lock-ico').textContent = '🔒';
+  activateTab('user');
+}
+
+/* ── FAQ TOGGLE ── */
+function toggleFaq(el){
+  const a = el.nextElementSibling;
+  const isOpen = a.classList.contains('open');
+  document.querySelectorAll('.faq-a').forEach(x=>x.classList.remove('open'));
+  document.querySelectorAll('.faq-q').forEach(x=>x.classList.remove('open'));
+  if(!isOpen){a.classList.add('open');el.classList.add('open');}
+}
+
+/* ── SIDEBAR ACTIVE SCROLL ── */
+const topBtn = document.getElementById('top-btn');
+
+window.addEventListener('scroll',()=>{
+  const guide = currentTab;
+  const sb = document.querySelectorAll(`[data-guide="${guide}"]`);
+  const prefix = guide === 'user' ? 'u-' : 'a-';
+  let current = '';
+  document.querySelectorAll('.section').forEach(s=>{
+    if(s.id && s.id.startsWith(prefix) && window.scrollY >= s.offsetTop - 100) current = s.id;
+  });
+  sb.forEach(i=>{
+    i.classList.remove('act');
+    if(i.getAttribute('href')==='#'+current) i.classList.add('act');
+  });
+  topBtn.classList.toggle('show', window.scrollY > 300);
+});
+</script>
+</body>
+</html>
