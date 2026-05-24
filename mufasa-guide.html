@@ -20,84 +20,10 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html,body{font-family:'Barlow',sans-serif;background:transparent;color:var(--w);overflow:hidden;}
 
-/* ═══ TRIGGER BUTTON ═══ */
-#man-trig {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--gd), var(--gl));
-  border: none;
-  cursor: pointer;
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 6px 24px rgba(212,148,42,.45), 0 0 0 0 rgba(212,148,42,.3);
-  transition: transform .22s, box-shadow .22s;
-  animation: pulse-ring 3s ease infinite;
-}
-#man-trig:hover { transform: scale(1.1); box-shadow: 0 10px 32px rgba(212,148,42,.6); }
-#man-trig.open { animation: none; transform: scale(1); background: linear-gradient(135deg,#2a2a2a,#444); }
-#man-trig .q-icon {
-  font-family: 'Anton', sans-serif;
-  font-size: 1.5rem;
-  color: var(--bg);
-  line-height: 1;
-  transition: opacity .2s, transform .25s;
-}
-#man-trig.open .q-icon { content: ''; opacity: 0; transform: rotate(90deg) scale(0); }
-#man-trig .x-icon {
-  position: absolute;
-  font-family: 'Anton', sans-serif;
-  font-size: 1.2rem;
-  color: #fff;
-  opacity: 0;
-  transform: rotate(-90deg) scale(0);
-  transition: opacity .2s, transform .25s;
-}
-#man-trig.open .x-icon { opacity: 1; transform: rotate(0deg) scale(1); }
-@keyframes pulse-ring {
-  0%   { box-shadow: 0 6px 24px rgba(212,148,42,.45), 0 0 0 0 rgba(212,148,42,.35); }
-  60%  { box-shadow: 0 6px 24px rgba(212,148,42,.45), 0 0 0 14px rgba(212,148,42,0); }
-  100% { box-shadow: 0 6px 24px rgba(212,148,42,.45), 0 0 0 0 rgba(212,148,42,0); }
-}
-
-/* ═══ TOOLTIP ═══ */
+/* ═══ TOOLTIP (Hidden) ═══ */
 #man-tooltip {
-  position: fixed;
-  bottom: 32px;
-  right: 86px;
-  background: var(--card);
-  border: 1px solid var(--b2);
-  border-radius: var(--r2);
-  padding: 8px 14px;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: .8rem;
-  font-weight: 700;
-  letter-spacing: .1em;
-  color: var(--gl);
-  text-transform: uppercase;
-  white-space: nowrap;
-  z-index: 9998;
-  pointer-events: none;
-  opacity: 1;
-  transition: opacity .3s;
-  animation: ttfade 4s ease forwards;
+  display: none;
 }
-#man-tooltip::after {
-  content: '';
-  position: absolute;
-  right: -7px;
-  top: 50%;
-  transform: translateY(-50%);
-  border: 7px solid transparent;
-  border-left-color: var(--b2);
-  border-right: none;
-}
-@keyframes ttfade { 0%{opacity:1} 70%{opacity:1} 100%{opacity:0} }
 
 /* ═══ PANEL OVERLAY ═══ */
 #man-overlay {
@@ -526,7 +452,6 @@ mark { background: rgba(212,148,42,.3); color: var(--w); border-radius: 2px; pad
 /* ── Responsive ── */
 @media (max-width: 480px) {
   :root { --panel-w: 100vw; }
-  #man-trig { bottom: 16px; right: 16px; width: 46px; height: 46px; }
   .mtab { font-size: .65rem; padding: 10px 10px; }
 }
 
@@ -541,15 +466,6 @@ mark { background: rgba(212,148,42,.3); color: var(--w); border-radius: 2px; pad
 </style>
 </head>
 <body>
-
-<!-- ══ TOOLTIP ══ -->
-<div id="man-tooltip">📖 Site Manual</div>
-
-<!-- ══ TRIGGER BUTTON ══ -->
-<button id="man-trig" onclick="manToggle()" title="Open Site Manual" aria-label="Open Site Manual" aria-expanded="false">
-  <span class="q-icon">?</span>
-  <span class="x-icon">✕</span>
-</button>
 
 <!-- ══ OVERLAY ══ -->
 <div id="man-overlay" onclick="manClose()"></div>
@@ -608,7 +524,7 @@ mark { background: rgba(212,148,42,.3); color: var(--w); border-radius: 2px; pad
           <div class="mcard-title">What Is This Site?</div>
         </div>
         <div class="mcard-body">
-          <p>Mufasa Strength Equipment is a full-featured fitness e-commerce and training platform. It combines a product store, personalised workout plans, diet programmes, fitness tools, tutorial guides, videos, challenges, and a workout music player — all in one place.</p>
+          <p>Mufasa Strength Equipment is a full-featured fitness e-commerce and training platform. It combines a product store, personalised workout plans, diet programmes, fitness tools, tutorial guides, and a monthly challenge system — all optimised for home training in Kenya.</p>
         </div>
       </div>
 
@@ -641,7 +557,7 @@ mark { background: rgba(212,148,42,.3); color: var(--w); border-radius: 2px; pad
           <div class="mcard-title">Mobile & PWA Support</div>
         </div>
         <div class="mcard-body">
-          <p>The site is fully mobile-optimised. You can also <strong>install it as an app</strong> on your phone — when the install banner appears at the bottom of the screen, tap <strong>"Install"</strong> to add it to your home screen. Once installed it works like a native app.</p>
+          <p>The site is fully mobile-optimised. You can also <strong>install it as an app</strong> on your phone — when the install banner appears at the bottom of the screen, tap <strong>"Install"</strong>. The app works offline and updates automatically.</p>
         </div>
       </div>
 
@@ -651,7 +567,7 @@ mark { background: rgba(212,148,42,.3); color: var(--w); border-radius: 2px; pad
           <div class="mcard-title">How to Order</div>
         </div>
         <div class="mcard-body">
-          <p>All purchases are completed via <strong>WhatsApp</strong> — add items to your cart, then tap <strong>"Order via WhatsApp"</strong>. Your cart summary is sent automatically. Payment and delivery are arranged directly with the team.</p>
+          <p>All purchases are completed via <strong>WhatsApp</strong> — add items to your cart, then tap <strong>"Order via WhatsApp"</strong>. Your cart summary is sent automatically. Payment and delivery details are arranged with our team.</p>
           <p>Direct WhatsApp: <strong>0115 228 712</strong></p>
         </div>
       </div>
@@ -725,7 +641,7 @@ mark { background: rgba(212,148,42,.3); color: var(--w); border-radius: 2px; pad
       <div class="mcard">
         <div class="mcard-head"><div class="mcard-icon">🛒</div><div class="mcard-title">Cart Drawer</div></div>
         <div class="mcard-body">
-          <p>Tap the 🛒 icon to open the cart from any page. Items you add in the Store appear here. You can remove items with the ✕ button next to each. When ready, tap <strong>"Order via WhatsApp"</strong> — this builds a formatted order message and opens WhatsApp.</p>
+          <p>Tap the 🛒 icon to open the cart from any page. Items you add in the Store appear here. You can remove items with the ✕ button next to each. When ready, tap <strong>"Order via WhatsApp"</strong> to complete checkout.</p>
         </div>
       </div>
 
@@ -767,7 +683,7 @@ mark { background: rgba(212,148,42,.3); color: var(--w); border-radius: 2px; pad
       <div class="mcard">
         <div class="mcard-head"><div class="mcard-icon">🎁</div><div class="mcard-title">Bundles</div></div>
         <div class="mcard-body">
-          <p>Bundles group popular products at a discounted price. Filter by <strong>"Bundles"</strong> in the store to see all current offers. Bundle items are listed on the card — tap to order the whole set via WhatsApp in one message.</p>
+          <p>Bundles group popular products at a discounted price. Filter by <strong>"Bundles"</strong> in the store to see all current offers. Bundle items are listed on the card — tap to order the entire package at once.</p>
         </div>
       </div>
 
@@ -781,7 +697,7 @@ mark { background: rgba(212,148,42,.3); color: var(--w); border-radius: 2px; pad
       <div class="mcard">
         <div class="mcard-head"><div class="mcard-icon">🚚</div><div class="mcard-title">Delivery</div></div>
         <div class="mcard-body">
-          <p><strong>Nairobi:</strong> 1–2 business days. <strong>Other counties:</strong> 2–4 business days. Orders above the free-delivery minimum qualify for free shipping (check the promo banner in store for the current threshold).</p>
+          <p><strong>Nairobi:</strong> 1–2 business days. <strong>Other counties:</strong> 2–4 business days. Orders above the free-delivery minimum qualify for free shipping (check the promo banner at checkout).</p>
         </div>
       </div>
 
@@ -897,7 +813,7 @@ mark { background: rgba(212,148,42,.3); color: var(--w); border-radius: 2px; pad
       <div class="mcard">
         <div class="mcard-head"><div class="mcard-icon">🏆</div><div class="mcard-title">What Is the Challenge?</div></div>
         <div class="mcard-body">
-          <p>Each month a new challenge runs — typically 30 days. Members follow a linked workout plan and diet, log daily sessions, and the most consistent and improved participants win a cash prize paid via M-Pesa.</p>
+          <p>Each month a new challenge runs — typically 30 days. Members follow a linked workout plan and diet, log daily sessions, and the most consistent and improved participants win a cash prize.</p>
           <p style="margin-top:6px">The current challenge name, dates, prize, and countdown are shown on the Challenges page.</p>
         </div>
       </div>
@@ -930,7 +846,7 @@ mark { background: rgba(212,148,42,.3); color: var(--w); border-radius: 2px; pad
       <div class="mcard">
         <div class="mcard-head"><div class="mcard-icon">📊</div><div class="mcard-title">Leaderboard</div></div>
         <div class="mcard-body">
-          <p>The leaderboard below the tracker shows the top performers ranked by the admin based on consistency and progress. Rankings are updated regularly throughout the challenge month. Aim to appear on the podium — top 3 win prizes!</p>
+          <p>The leaderboard below the tracker shows the top performers ranked by the admin based on consistency and progress. Rankings are updated regularly throughout the challenge month. Aim to appear here!</p>
         </div>
       </div>
 
@@ -975,7 +891,7 @@ mark { background: rgba(212,148,42,.3); color: var(--w); border-radius: 2px; pad
         </div>
       </div>
 
-      <div class="mtip"><strong>Best Practice:</strong> Run the Calorie Calculator first to know your TDEE (Total Daily Energy Expenditure), then use the Macro Calculator to split those calories across protein, carbs, and fat.</div>
+      <div class="mtip"><strong>Best Practice:</strong> Run the Calorie Calculator first to know your TDEE (Total Daily Energy Expenditure), then use the Macro Calculator to split those calories across meals.</div>
 
     </div><!-- /tools -->
 
@@ -998,314 +914,44 @@ mark { background: rgba(212,148,42,.3); color: var(--w); border-radius: 2px; pad
               <tr><td>Progressive Overload</td><td>Understand how to increase weight and intensity safely</td></tr>
               <tr><td>Recovery</td><td>Rest days, sleep, muscle soreness, and deload weeks</td></tr>
               <tr><td>Nutrition Basics</td><td>Protein, carbs, fat — what they do and how much you need</td></tr>
+              <tr><td>Training Plans</td><td>Programming advice for all experience levels and goals</td></tr>
             </tbody>
           </table>
         </div>
       </div>
 
       <div class="mcard">
-        <div class="mcard-head"><div class="mcard-icon">📑</div><div class="mcard-title">Reading a Guide</div></div>
+        <div class="mcard-head"><div class="mcard-icon">📚</div><div class="mcard-title">How to Read a Guide</div></div>
         <div class="mcard-body">
           <div class="msteps">
             <div class="mstep"><div class="mstep-txt">Navigate to <strong>📖 Guides</strong> in the nav bar.</div></div>
-            <div class="mstep"><div class="mstep-txt">Browse the guide cards — each shows a title, category badge, and summary.</div></div>
-            <div class="mstep"><div class="mstep-txt">Tap <strong>"Read Guide"</strong> to open the full article in a clean reading view.</div></div>
-            <div class="mstep"><div class="mstep-txt">Use the <strong>← Back</strong> button (top-left of nav) to return to the guides list.</div></div>
+            <div class="mstep"><div class="mstep-txt">Choose the guide category from the expandable cards.</div></div>
+            <div class="mstep"><div class="mstep-txt">Read at your own pace — guides are structured with sub-sections and actionable steps.</div></div>
+            <div class="mstep"><div class="mstep-txt">Share a guide via the <strong>Share</strong> button if you think a friend needs the info.</div></div>
           </div>
         </div>
       </div>
 
-      <div class="mtip"><strong>New to training?</strong> Start with the Beginner Guide — it covers everything you need to know before your first session.</div>
+      <div class="mtip"><strong>Tip:</strong> Guides are updated monthly to match the current challenge focus. Check back regularly for new content.</div>
 
     </div><!-- /guides -->
 
-
-    <!-- ═══ MUSIC ═══ -->
-    <div class="mpage" id="mp-music" data-label="music">
-
-      <div class="msec-tag">Workout Soundtrack</div>
-      <div class="msec-h">MUSIC PLAYER</div>
-      <p class="msec-sub">An in-browser workout playlist curated by the MUFASA team. Stream tracks while you train without leaving the site.</p>
-
-      <div class="mcard">
-        <div class="mcard-head"><div class="mcard-icon">🎵</div><div class="mcard-title">Music Categories</div></div>
-        <div class="mcard-body">
-          <span class="mpill">Hype / Workout</span>
-          <span class="mpill">Afrobeats</span>
-          <span class="mpill">Hip Hop</span>
-          <span class="mpill">Electronic</span>
-          <p style="margin-top:10px">Filter the playlist by genre using the category tabs. New tracks are added regularly by the admin.</p>
-        </div>
-      </div>
-
-      <div class="mcard">
-        <div class="mcard-head"><div class="mcard-icon">▶️</div><div class="mcard-title">Using the Player</div></div>
-        <div class="mcard-body">
-          <div class="msteps">
-            <div class="mstep"><div class="mstep-txt">Go to <strong>🎵 Music</strong> in the nav bar.</div></div>
-            <div class="mstep"><div class="mstep-txt">Select a <strong>category</strong> from the filter tabs (All / Hype / Afrobeats / Hip Hop / Electronic).</div></div>
-            <div class="mstep"><div class="mstep-txt">Tap a track card to <strong>play</strong>. The player controls appear at the bottom.</div></div>
-            <div class="mstep"><div class="mstep-txt">Use <strong>Play/Pause, Skip, Volume</strong> controls in the player bar.</div></div>
-            <div class="mstep"><div class="mstep-txt">Tracks can also be opened on their source platform (YouTube, SoundCloud, Spotify) via the external link.</div></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="mcard">
-        <div class="mcard-head"><div class="mcard-icon">📁</div><div class="mcard-title">Uploading Tracks (Admin)</div></div>
-        <div class="mcard-body">
-          <p>Admins can add tracks via the Music tab in the Admin Panel — either by pasting a link (YouTube / SoundCloud / Spotify) or uploading an MP3 from their device. See the <strong>Admin</strong> tab in this manual for full instructions.</p>
-        </div>
-      </div>
-
-    </div><!-- /music -->
-
-
-    <!-- ═══ ADMIN ═══ -->
-    <div class="mpage" id="mp-admin" data-label="admin">
-
-      <div class="msec-tag">Admin Panel</div>
-      <div class="msec-h">ADMIN TOOLS</div>
-      <p class="msec-sub">The password-protected Admin Panel allows the site owner to manage every piece of dynamic content without touching code.</p>
-
-      <div class="mwarn"><strong>Admin Access Only.</strong> These features are restricted. Do not share your admin password.</div>
-
-      <div class="mcard">
-        <div class="mcard-head"><div class="mcard-icon">🔐</div><div class="mcard-title">Logging In</div></div>
-        <div class="mcard-body">
-          <div class="msteps">
-            <div class="mstep"><div class="mstep-txt">Scroll to the <strong>footer</strong> and tap <strong>"🔐 Admin Login"</strong>.</div></div>
-            <div class="mstep"><div class="mstep-txt">Enter your admin password in the popup and tap <strong>UNLOCK</strong> (or press Enter).</div></div>
-            <div class="mstep"><div class="mstep-txt">The Admin Panel slides up from the bottom, covering the full screen.</div></div>
-            <div class="mstep"><div class="mstep-txt">When finished, tap <strong>✕ EXIT</strong> to close and return to the site.</div></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="mcard">
-        <div class="mcard-head"><div class="mcard-icon">📊</div><div class="mcard-title">Admin Panel Tabs</div></div>
-        <div class="mcard-body">
-          <table class="mtable">
-            <thead><tr><th>Tab</th><th>What You Can Manage</th></tr></thead>
-            <tbody>
-              <tr><td>💬 Testimonials</td><td>Add, edit, or remove customer reviews shown on the Home page</td></tr>
-              <tr><td>🏆 Challenge</td><td>Set challenge name, dates, prize, duration, and join message</td></tr>
-              <tr><td>📊 Leaderboard</td><td>Add/rank members; view all progress tracker submissions</td></tr>
-              <tr><td>💰 DB Prices</td><td>Update dumbbell prices in KSH — changes reflect live in the store</td></tr>
-              <tr><td>🎽 Accessories</td><td>Update accessory prices</td></tr>
-              <tr><td>🎵 Music</td><td>Add tracks by URL or MP3 upload; edit or delete existing tracks</td></tr>
-              <tr><td>▶️ Videos</td><td>Add YouTube or local video links to the Videos page</td></tr>
-              <tr><td>💪 Workouts</td><td>Pin a featured workout plan and add Tip of the Week</td></tr>
-              <tr><td>🥗 Diet</td><td>Feature a diet plan and add a Nutrition Tip of the Week</td></tr>
-              <tr><td>🛒 Store</td><td>Promo banner, hero text, delivery settings, badges, stock status, bundles</td></tr>
-              <tr><td>⚙️ Settings</td><td>Change admin password; clear all data (danger zone)</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="mcard">
-        <div class="mcard-head"><div class="mcard-icon">💬</div><div class="mcard-title">Adding a Testimonial</div></div>
-        <div class="mcard-body">
-          <div class="msteps">
-            <div class="mstep"><div class="mstep-txt">Open Admin Panel → <strong>💬 Testimonials</strong> tab.</div></div>
-            <div class="mstep"><div class="mstep-txt">Fill in <strong>Name, Location, Product</strong> fields.</div></div>
-            <div class="mstep"><div class="mstep-txt">Set star rating using the ★ buttons.</div></div>
-            <div class="mstep"><div class="mstep-txt">Type the review text in the <strong>Review</strong> field.</div></div>
-            <div class="mstep"><div class="mstep-txt">Tap <strong>"+ ADD TESTIMONIAL"</strong> — it appears live on the Home page instantly.</div></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="mcard">
-        <div class="mcard-head"><div class="mcard-icon">🏆</div><div class="mcard-title">Setting Up a Challenge</div></div>
-        <div class="mcard-body">
-          <div class="msteps">
-            <div class="mstep"><div class="mstep-txt">Admin Panel → <strong>🏆 Challenge</strong> tab.</div></div>
-            <div class="mstep"><div class="mstep-txt">Enter Challenge Name, Month Label, Duration (days), Prize amount.</div></div>
-            <div class="mstep"><div class="mstep-txt">Set <strong>Start Date</strong> and <strong>End Date</strong> — the countdown activates automatically.</div></div>
-            <div class="mstep"><div class="mstep-txt">Link a <strong>Workout Goal</strong> and <strong>Diet Plan</strong> — buttons appear on the Challenges page.</div></div>
-            <div class="mstep"><div class="mstep-txt">Set the <strong>WhatsApp Join Message</strong> that fires when users tap "Join".</div></div>
-            <div class="mstep"><div class="mstep-txt">Tap <strong>"💾 SAVE CHALLENGE"</strong>.</div></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="mcard">
-        <div class="mcard-head"><div class="mcard-icon">💰</div><div class="mcard-title">Updating Prices</div></div>
-        <div class="mcard-body">
-          <div class="msteps">
-            <div class="mstep"><div class="mstep-txt">Admin Panel → <strong>💰 DB Prices</strong> tab.</div></div>
-            <div class="mstep"><div class="mstep-txt">Each dumbbell weight (2–35KG) has input fields for <strong>Single</strong> and <strong>Pair</strong> prices in KSH.</div></div>
-            <div class="mstep"><div class="mstep-txt">Update any values and tap <strong>"💾 SAVE DB PRICES"</strong>.</div></div>
-            <div class="mstep"><div class="mstep-txt">Prices update instantly in the store — no refresh needed.</div></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="mcard">
-        <div class="mcard-head"><div class="mcard-icon">🛒</div><div class="mcard-title">Store Admin — Full Guide</div></div>
-        <div class="mcard-body">
-          <table class="mtable">
-            <thead><tr><th>Feature</th><th>How to Use</th></tr></thead>
-            <tbody>
-              <tr><td>📢 Promo Banner</td><td>Toggle on/off + edit the scrolling text. Use ◆ to separate messages.</td></tr>
-              <tr><td>🦁 Hero Text</td><td>Change the store headline and sub-headline.</td></tr>
-              <tr><td>🚚 Delivery Settings</td><td>Set free delivery minimum (KSH) and delivery time note.</td></tr>
-              <tr><td>🏅 Badges</td><td>Assign badge labels (e.g. "Best Seller 🔥") to any weight.</td></tr>
-              <tr><td>📦 Stock Status</td><td>Mark items as Low Stock or Out of Stock — disables Add to Cart.</td></tr>
-              <tr><td>🎁 Bundles</td><td>Create/edit bundles: name, badge, icon, sale price, original price, items list.</td></tr>
-              <tr><td>🚀 Push Config</td><td>After all changes, tap "Push Config to Store" to apply everything live.</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="mcard">
-        <div class="mcard-head"><div class="mcard-icon">⚙️</div><div class="mcard-title">Changing Your Password</div></div>
-        <div class="mcard-body">
-          <div class="msteps">
-            <div class="mstep"><div class="mstep-txt">Admin Panel → <strong>⚙️ Settings</strong> tab.</div></div>
-            <div class="mstep"><div class="mstep-txt">Enter your <strong>Current</strong> password, then the <strong>New</strong> password, then <strong>Confirm</strong>.</div></div>
-            <div class="mstep"><div class="mstep-txt">Tap <strong>"🔒 CHANGE PASSWORD"</strong>.</div></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="mwarn"><strong>Danger Zone:</strong> The "🗑️ CLEAR ALL DATA" button in Settings permanently deletes all Firebase admin data including testimonials, challenge, leaderboard, prices, and music. This cannot be undone.</div>
-
-      <div class="mcard">
-        <div class="mcard-head"><div class="mcard-icon">📊</div><div class="mcard-title">Viewing Progress Tracker Submissions</div></div>
-        <div class="mcard-body">
-          <p>Admin Panel → <strong>📊 Leaderboard</strong> tab → scroll to <strong>"Progress Tracker Submissions"</strong>. All sessions logged by challenge participants appear here. Use this data to update leaderboard rankings — copy the best performers to the Leaderboard section above.</p>
-        </div>
-      </div>
-
-    </div><!-- /admin -->
-
-    <!-- Back to top -->
-    <div style="padding:0 18px 8px;display:flex;justify-content:flex-end;">
-      <button id="man-top-btn" onclick="manScrollTop()" title="Back to top" aria-label="Back to top">↑</button>
-    </div>
-
-  </div><!-- /man-body -->
+  </div>
 
   <!-- Footer -->
   <div id="man-foot">
     <div class="man-foot-txt">© 2025 MUFASA STRENGTH</div>
-    <a class="man-foot-wa" href="https://wa.me/254115228712" target="_blank" rel="noopener">
-      💬 0115 228 712
-    </a>
+    <a href="https://wa.me/254115228712" class="man-foot-wa">💬 WhatsApp Support</a>
   </div>
 
-</div><!-- /man-panel -->
+</div>
 
 <script>
-/* ══ MANUAL WIDGET LOGIC ══ */
-const trig = document.getElementById('man-trig');
-const panel = document.getElementById('man-panel');
-const overlay = document.getElementById('man-overlay');
-const tooltip = document.getElementById('man-tooltip');
-const body = document.getElementById('man-body');
-
-/* Remove tooltip after animation */
-setTimeout(() => { if(tooltip) tooltip.remove(); }, 4200);
-
-function manToggle(){
-  if(panel.classList.contains('open')) manClose();
-  else manOpen();
-}
-
-function manOpen(){
-  panel.classList.add('open');
-  overlay.classList.add('open');
-  trig.classList.add('open');
-  trig.setAttribute('aria-expanded','true');
-  // Trap focus inside panel
-  setTimeout(()=>{ document.getElementById('man-search').focus(); },400);
-}
-
-function manClose(){
-  panel.classList.remove('open');
-  overlay.classList.remove('open');
-  trig.classList.remove('open');
-  trig.setAttribute('aria-expanded','false');
-}
-
-/* Tab switching */
-function manTab(id, btn){
-  document.querySelectorAll('.mpage').forEach(p => p.classList.remove('on'));
-  document.querySelectorAll('.mtab').forEach(t => t.classList.remove('on'));
-  const page = document.getElementById('mp-'+id);
-  if(page){ page.classList.add('on'); }
-  btn.classList.add('on');
-  body.scrollTop = 0;
-  // Clear search on tab change
-  const s = document.getElementById('man-search');
-  s.value = '';
-  clearHighlights();
-  document.getElementById('man-no-results').style.display = 'none';
-}
-
-/* Search */
-function manSearch(q){
-  q = q.trim().toLowerCase();
-  clearHighlights();
-  const noRes = document.getElementById('man-no-results');
-  if(!q){ noRes.style.display='none'; return; }
-
-  let found = 0;
-  document.querySelectorAll('.mpage').forEach(page => {
-    const text = page.innerHTML;
-    if(page.textContent.toLowerCase().includes(q)){
-      found++;
-    }
-  });
-
-  // Highlight within the currently active page
-  const activePage = document.querySelector('.mpage.on');
-  if(activePage){
-    const walker = document.createTreeWalker(activePage, NodeFilter.SHOW_TEXT);
-    const nodesToProcess = [];
-    while(walker.nextNode()){
-      if(walker.currentNode.nodeValue.toLowerCase().includes(q)){
-        nodesToProcess.push(walker.currentNode);
-      }
-    }
-    nodesToProcess.forEach(node => {
-      const parent = node.parentNode;
-      if(parent && parent.nodeName !== 'MARK' && parent.nodeName !== 'INPUT' && parent.nodeName !== 'SCRIPT'){
-        const re = new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');
-        const span = document.createElement('span');
-        span.innerHTML = node.nodeValue.replace(re,'<mark>$1</mark>');
-        parent.replaceChild(span, node);
-      }
-    });
-  }
-
-  noRes.style.display = found === 0 ? 'block' : 'none';
-}
-
-function clearHighlights(){
-  document.querySelectorAll('.mpage span').forEach(sp => {
-    if(sp.querySelector('mark')){
-      sp.outerHTML = sp.innerHTML;
-    }
-  });
-  document.querySelectorAll('mark').forEach(m => {
-    m.outerHTML = m.textContent;
-  });
-}
-
-/* Scroll to top */
-function manScrollTop(){
-  body.scrollTop = 0;
-}
-
-/* Keyboard close */
-document.addEventListener('keydown', e => {
-  if(e.key === 'Escape' && panel.classList.contains('open')) manClose();
-});
+function manToggle() { const p = document.getElementById('man-panel'); const o = document.getElementById('man-overlay'); p.classList.toggle('open'); o.classList.toggle('open'); document.getElementById('man-trig').setAttribute('aria-expanded', p.classList.contains('open')); }
+function manClose() { document.getElementById('man-panel').classList.remove('open'); document.getElementById('man-overlay').classList.remove('open'); }
+function manTab(id, btn) { document.querySelectorAll('.mpage').forEach(p => p.classList.remove('on')); document.querySelectorAll('.mtab').forEach(b => b.classList.remove('on')); document.getElementById('mp-' + id).classList.add('on'); btn.classList.add('on'); }
+function manSearch(q) { const lc = q.toLowerCase(); document.querySelectorAll('.mpage').forEach(p => { const txt = p.textContent.toLowerCase(); p.style.display = txt.includes(lc) ? 'block' : 'none'; }); if (!q) { document.querySelectorAll('.mpage').forEach(p => p.style.display = 'none'); document.getElementById('mp-overview').classList.add('on'); } }
 </script>
+
 </body>
 </html>
